@@ -1,33 +1,84 @@
 
 .mycard {
-  
-  &__display {
+  &__flip-effect {
+
+  }
+
+  &__container {
+    position: relative;
+    text-align: center;
+  }
+
+  &__layout {
     height: 8rem;
     width: 8rem;
-    background: #2e3d49 center;
-    font-size: 0;
-    color: white;
     border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
   }
 
-  &--open {
-    transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
+  &__content {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  &--show {
+  &--face-down--wrapper {
+    @extend .mycard--animation-initial-state;
+    transform: rotateY(-180deg);
+  }
+
+  &--face-down {
+    @extend .mycard__layout;
+    @extend .mycard--selectable-hover;
+    background: #2e3d49;
+    font-size: 0;
+  }
+
+  &--face-up {
+    @extend .mycard__layout;
+    @extend .mycard__content;
+    color: white;
+    font-size: 2rem;
+  }
+
+  &--picked {
+    @extend .mycard--unselectable-hover;
+    background: #02b3e4;
     font-size: 33px;
   }
 
   &--match {
-    cursor: default;
+    @extend .mycard--unselectable-hover;
     background: #02ccba;
     font-size: 33px;
+  }
+
+  &--selectable-hover {
+    cursor: pointer;
+  }
+
+  &--unselectable-hover {
+    cursor: default;
+  }
+
+  &--revealed {
+    @extend .mycard--animation-initial-state;
+  }
+
+  &--animation-initial-state {
+    position: absolute;
+    left: 0;
+    right: 0;
+    backface-visibility: hidden;
+    transition: transform 0.3s;
+  }
+
+  &--flip-hover:hover &--revealed {
+    transform: rotateY(-180deg);
+  }
+
+  &--flip-hover:hover &--face-down--wrapper {
+    transform: rotateY(0);
   }
 }
