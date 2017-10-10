@@ -64,6 +64,7 @@
 
   &--revealed {
     @extend .mycard--animation-initial-state;
+    transform: rotateY(0);
   }
 
   &--animation-initial-state {
@@ -74,11 +75,11 @@
     transition: transform 0.3s;
   }
 
-  &--flip-hover:hover &--revealed {
+  &--effect-click.flipped &--revealed {
     transform: rotateY(-180deg);
   }
 
-  &--flip-hover:hover &--face-down--wrapper {
+  &--effect-click.flipped &--face-down--wrapper {
     transform: rotateY(0);
   }
 }
