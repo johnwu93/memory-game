@@ -1,14 +1,5 @@
 
 .mycard {
-  &__flip-effect {
-
-  }
-
-  &__container {
-    position: relative;
-    text-align: center;
-  }
-
   &__layout {
     height: 8rem;
     width: 8rem;
@@ -23,13 +14,9 @@
     align-items: center;
   }
 
-  &--face-down--wrapper {
-    @extend .mycard--animation-initial-state;
-    transform: rotateY(-180deg);
-  }
-
   &--face-down {
     @extend .mycard__layout;
+    @extend .mycard__content;
     @extend .mycard--selectable-hover;
     background: #2e3d49;
     font-size: 0;
@@ -38,20 +25,24 @@
   &--face-up {
     @extend .mycard__layout;
     @extend .mycard__content;
+    @extend .mycard--unselectable-hover;
     color: white;
     font-size: 2rem;
   }
 
   &--picked {
-    @extend .mycard--unselectable-hover;
+    @extend .mycard--face-up;
     background: #02b3e4;
-    font-size: 33px;
   }
 
   &--match {
-    @extend .mycard--unselectable-hover;
+    @extend .mycard--face-up;
     background: #02ccba;
-    font-size: 33px;
+  }
+
+  &--mismatch {
+    @extend .mycard--face-up;
+    background: #e42f4f;
   }
 
   &--selectable-hover {
@@ -62,24 +53,4 @@
     cursor: default;
   }
 
-  &--revealed {
-    @extend .mycard--animation-initial-state;
-    transform: rotateY(0);
-  }
-
-  &--animation-initial-state {
-    position: absolute;
-    left: 0;
-    right: 0;
-    backface-visibility: hidden;
-    transition: transform 0.3s;
-  }
-
-  &--effect-click.flipped &--revealed {
-    transform: rotateY(-180deg);
-  }
-
-  &--effect-click.flipped &--face-down--wrapper {
-    transform: rotateY(0);
-  }
 }
