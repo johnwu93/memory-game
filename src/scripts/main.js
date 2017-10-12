@@ -4,7 +4,7 @@ import { STATE } from './cardview';
 
 
 const cardsinput = [
-  ['fa-diamond', STATE.MISMATCH],
+  ['fa-diamond', STATE.FACEDOWN],
   ['fa-anchor', STATE.MISMATCH],
   ['fa-diamond', STATE.PICKED],
   ['fa-paper-plane-o', STATE.MATCH],
@@ -16,6 +16,10 @@ const cardsinput = [
 
 $(() => {
   const cardViews = initialize(cardsinput);
-  cardViews[2].setMatch();
-  cardViews[3].setMismatch();
+  setTimeout(() => cardViews[2].setMismatch(), 1000);
+  cardViews.forEach(
+    (cardView) => {
+      cardView.bindFaceDownClick.bind(cardView)(cardView.setPicked.bind(cardView));
+    }
+  );
 });

@@ -12,11 +12,14 @@ const isStateEqual = function isState(thisState, thatState) {
 };
 
 
+const END_ANIMATION_EVENTS = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+
 export class CardView {
   constructor(image, state) {
     this.image = image;
     this.state = state;
     this.cardSelector = $(this.render());
+    // noinspection JSValidateTypes
     this.cardContent = $(this.cardSelector).children();
   }
 
@@ -42,8 +45,35 @@ export class CardView {
     $(this.cardContent).addClass(`${classAnimation} ${this.state.css}`);
   }
 
+  bindFaceDownClick(chooseCallback) {
+    $(this.cardSelector).on('click', `.${STATE.FACEDOWN.css}`, chooseCallback);
+  }
+
+  animateFlip(newState) {
+    this.cardContent.addClass('flipOutY');
+    this.cardContent.one(END_ANIMATION_EVENTS, () => {
+      this.cardContent
+        .removeClass(`${this.state.css} flipOutY`);
+      this.state = newState;
+      this.cardContent.addClass(`flipInY ${newState.css}`)
+        .one(END_ANIMATION_EVENTS, () => {
+          this.cardContent.removeClass('flipInY');
+        });
+    });
+  }
+
+  setPicked() {
+    this.animateFlip(STATE.PICKED);
+  }
+
+  // noinspection JSUnusedGlobalSymbols
+  setFacedown() {
+    this.animateFlip(STATE.FACEDOWN);
+  }
+
+  // noinspection JSUnusedGlobalSymbols
   setMatch() {
-    this.removeClasses();
+    this.removeClasses(); // these effects do happen, but it's very hard to see
     this.state = STATE.MATCH;
     this.addClasses('rubberBand');
     // this.cardContent.removeClasses('rubberBand');
