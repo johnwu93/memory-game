@@ -1,4 +1,4 @@
-import STATE from './State';
+import STATE from './state';
 
 
 export default class Game {
@@ -37,18 +37,18 @@ export default class Game {
 
   computeMatchCard(thisCard, thatCard) {
     if (thisCard.isMatchingCard(thatCard)) {
-      thisCard.setState(STATE.MISMATCH);
-      thatCard.setState(STATE.MISMATCH);
-      this.currentlyPickedCards = [];
-    } else {
       thisCard.setState(STATE.MATCH);
       thatCard.setState(STATE.MATCH);
       this.currentlyPickedCards = [];
       this.numMatches += 1;
+    } else {
+      thisCard.setState(STATE.MISMATCH);
+      thatCard.setState(STATE.MISMATCH);
+      this.currentlyPickedCards = [];
     }
   }
 
   isWin() {
-    return this.numMatches * 2 === this.currentlyPickedCards.length;
+    return this.numMatches * 2 === this.cards.length;
   }
 }
