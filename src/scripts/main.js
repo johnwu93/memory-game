@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import initialize from './cardfactory';
-import { STATE } from './cardview';
+import { STATE } from './views/cardview';
 
 
 const cardsinput = [

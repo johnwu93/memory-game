@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import { CardView } from './cardview';
+import { CardView } from './views/cardview';
 
 
 export default function initialize(cardsInput) {
