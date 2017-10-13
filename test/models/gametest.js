@@ -1,5 +1,5 @@
 import Card from '../../src/scripts/models/card';
-import STATE from '../../src/scripts/models/state';
+import STATE from '../../src/scripts/util/state';
 import Game from '../../src/scripts/models/game';
 
 describe('Game Logic', () => {

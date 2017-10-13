@@ -1,23 +1,16 @@
 import $ from 'jquery';
-
-export const STATE = {
-  FACEDOWN: {value: 'FACEDOWN', css: 'mycard--face-down'},
-  PICKED: {value: 'PICKED', css: 'mycard--picked'},
-  MATCH: {value: 'MATCHED', css: 'mycard--match'},
-  MISMATCH: {value: 'MATCHED', css: 'mycard--mismatch'}
-};
-
-const isStateEqual = function isState(thisState, thatState) {
-  return thisState === thatState;
-};
+import { STATE, isStateEqual } from '../util/state';
 
 
 const END_ANIMATION_EVENTS = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+const MATCH_ANIMATION = 'rubberBand';
+const MISMATCH_ANIMATION = 'shake';
 
-export class CardView {
-  constructor(image, state) {
+export default class CardView {
+  constructor(image, state, id) {
     this.image = image;
     this.state = state;
+    this.id = id;
     this.cardSelector = $(this.render());
     // noinspection JSValidateTypes
     this.cardContent = $(this.cardSelector).children();
@@ -25,7 +18,7 @@ export class CardView {
 
   render() {
     return `
-          <div class="mycard col-6 col-md-3 my-3">
+          <div id="${this.id}" class="mycard col-6 col-md-3 my-3">
             <div class="${this.state.css} animated mx-auto">
               <i class="fa ${this.image}"></i>
             </div>
@@ -34,9 +27,10 @@ export class CardView {
   }
 
   removeClasses() {
-    const removeQuery = Object.entries(STATE)
-      .filter(iterState => isStateEqual(iterState, this.state.css))
-      .join(' '); // Todo find set difference method
+    const removeQuery = Object.values(STATE)
+      .filter(iterState => !isStateEqual(iterState, this.state))
+      .map(iterState => iterState.css)
+      .join(' ');
 
     $(this.cardContent).removeClass(removeQuery);
   }
@@ -45,8 +39,11 @@ export class CardView {
     $(this.cardContent).addClass(`${classAnimation} ${this.state.css}`);
   }
 
+  // callback is a function that accepts an id value as input
   bindFaceDownClick(chooseCallback) {
-    $(this.cardSelector).on('click', `.${STATE.FACEDOWN.css}`, chooseCallback);
+    $(this.cardSelector).on('click', `.${STATE.FACEDOWN.css}`,
+      () => chooseCallback(this.id)
+    );
   }
 
   animateFlip(newState) {
@@ -62,27 +59,28 @@ export class CardView {
     });
   }
 
+  renderAnimationTransition(animationEffect) {
+    this.addClasses(animationEffect);
+    this.cardContent.removeClass(animationEffect);
+  }
+
   setPicked() {
     this.animateFlip(STATE.PICKED);
   }
 
-  // noinspection JSUnusedGlobalSymbols
   setFacedown() {
     this.animateFlip(STATE.FACEDOWN);
   }
 
-  // noinspection JSUnusedGlobalSymbols
   setMatch() {
-    this.removeClasses(); // these effects do happen, but it's very hard to see
     this.state = STATE.MATCH;
-    this.addClasses('rubberBand');
-    // this.cardContent.removeClasses('rubberBand');
+    this.removeClasses();
+    this.renderAnimationTransition(MATCH_ANIMATION);
   }
 
   setMismatch() {
-    this.removeClasses();
     this.state = STATE.MISMATCH;
-    this.addClasses('shake');
-    // Put a handler to remove shake after the animation is done
+    this.removeClasses();
+    this.renderAnimationTransition(MISMATCH_ANIMATION);
   }
 }

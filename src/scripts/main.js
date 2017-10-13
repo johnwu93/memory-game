@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import initialize from './cardfactory';
-import { STATE } from './views/cardview';
+import initialize from './controllers/initialize';
+import { STATE } from './util/state';
 
 
 const cardsinput = [
@@ -15,11 +15,5 @@ const cardsinput = [
 ];
 
 $(() => {
-  const cardViews = initialize(cardsinput);
-  setTimeout(() => cardViews[2].setMismatch(), 1000);
-  cardViews.forEach(
-    (cardView) => {
-      cardView.bindFaceDownClick.bind(cardView)(cardView.setPicked.bind(cardView));
-    }
-  );
+  initialize(cardsinput);
 });

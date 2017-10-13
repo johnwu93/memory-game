@@ -1,4 +1,4 @@
-import STATE from './state';
+import { STATE, isStateEqual } from '../util/state';
 
 
 export default class Game {
@@ -6,7 +6,6 @@ export default class Game {
     this.cards = cardsInput;
     this.currentlyPickedCards = [];
     this.numMatches = 0;
-    // Todo add functionality to show mismatched states
   }
 
   processInput(index) {
@@ -17,7 +16,7 @@ export default class Game {
   }
 
   pickCard(card) {
-    if (card.state === STATE.FACEDOWN) {
+    if (isStateEqual(card.state, STATE.FACEDOWN)) {
       this.computeFaceUpState(card);
     } else {
       throw new Error(`Unable to pick card ${card.toString()}. It's already face up.`);

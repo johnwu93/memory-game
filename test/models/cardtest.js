@@ -1,4 +1,4 @@
-import STATE from '../../src/scripts/models/state';
+import STATE from '../../src/scripts/util/state';
 import Card from '../../src/scripts/models/card';
 
 describe('Card', () => {
