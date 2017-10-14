@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "bootstrap-sass": "^3.3.7",
     "browser-sync": "^2.18.13",
@@ -40,6 +42,7 @@
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-safari-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
