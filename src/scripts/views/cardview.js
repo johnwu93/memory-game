@@ -35,8 +35,8 @@ export default class CardView {
     $(this.cardContent).removeClass(removeQuery);
   }
 
-  addClasses(classAnimation) {
-    $(this.cardContent).addClass(`${classAnimation} ${this.state.css}`);
+  addClasses(...classes) {
+    return $(this.cardContent).addClass(`${[...classes].join(' ')}`);
   }
 
   // callback is a function that accepts an id value as input
@@ -47,6 +47,9 @@ export default class CardView {
   }
 
   animateFlip(newState) {
+    // todo fix bug when a bug when a card
+    // is being flipped,
+    // the animation does not appear changin to mismatched
     this.cardContent.addClass('flipOutY');
     this.cardContent.one(END_ANIMATION_EVENTS, () => {
       this.cardContent
@@ -60,8 +63,9 @@ export default class CardView {
   }
 
   renderAnimationTransition(animationEffect) {
-    this.addClasses(animationEffect);
-    this.cardContent.removeClass(animationEffect);
+    this.addClasses(animationEffect, this.state.css).one(
+      END_ANIMATION_EVENTS, () => this.cardContent.removeClass(animationEffect)
+    );
   }
 
   setPicked() {
