@@ -5,10 +5,10 @@ import { STATE } from './util/state';
 
 const cardsinput = [
   ['fa-diamond', STATE.FACEDOWN],
-  ['fa-anchor', STATE.MISMATCH],
-  ['fa-diamond', STATE.PICKED],
-  ['fa-paper-plane-o', STATE.MATCH],
-  ['fa-anchor', STATE.MATCH],
+  ['fa-anchor', STATE.FACEDOWN],
+  ['fa-diamond', STATE.FACEDOWN],
+  ['fa-paper-plane-o', STATE.FACEDOWN],
+  ['fa-anchor', STATE.FACEDOWN],
   ['fa-paper-plane-o', STATE.FACEDOWN],
   ['fa-facebook', STATE.FACEDOWN],
   ['fa-facebook', STATE.FACEDOWN],
