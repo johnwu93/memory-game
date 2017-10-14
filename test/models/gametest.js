@@ -39,15 +39,32 @@ describe('Game Logic', () => {
     }
   );
 
-  it('should turn mismatched cards into facedown cards', () => {
-    const faceDownCard = new Card('foo', STATE.FACEDOWN);
-    const wrongMatchCards = ['foo', 'bar'].map(image => new Card(image, STATE.MISMATCH));
+  describe('turn mismatched cards into facedown cards', () => {
+    beforeEach(() => {
+      this.faceDownCard = new Card('foo', STATE.FACEDOWN);
+    });
 
-    const game = new Game([faceDownCard, ...wrongMatchCards]);
+    const assertAllCardsState = function assertEveryCardState(cards, state) {
+      cards.forEach((card) => {
+        assertStateEquals(card, state);
+      });
+    };
+    it('should flip two mismatched cards if a hidden card is picked', () => {
+      const wrongMatchCards = ['foo', 'bar'].map(image => new Card(image, STATE.MISMATCH));
+      const game = new Game([this.faceDownCard, ...wrongMatchCards]);
+      game.pickCard(this.faceDownCard);
 
-    game.pickCard(faceDownCard);
-    wrongMatchCards.forEach((wrongMatchCard) => {
-      assertStateEquals(wrongMatchCard, STATE.FACEDOWN);
+      assertAllCardsState(wrongMatchCards, STATE.FACEDOWN);
+    });
+
+
+    it('should flip two mismatched cards when playing the game', () => {
+      const eventualWrongMatchCards = ['foo', 'bar'].map(image => new Card(image, STATE.FACEDOWN));
+      const game = new Game([this.faceDownCard, ...eventualWrongMatchCards]);
+      eventualWrongMatchCards.forEach(game.pickCard.bind(game));
+      game.pickCard(this.faceDownCard);
+
+      assertAllCardsState(eventualWrongMatchCards, STATE.FACEDOWN);
     });
   });
 

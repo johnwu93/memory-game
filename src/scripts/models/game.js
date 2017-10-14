@@ -56,6 +56,7 @@ export default class Game {
     } else {
       thisCard.setState(STATE.MISMATCH);
       thatCard.setState(STATE.MISMATCH);
+      this.mismatchedCards = [thisCard, thatCard];
       this.currentlyPickedCards = [];
     }
   }
