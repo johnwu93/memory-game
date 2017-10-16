@@ -13,5 +13,21 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
   },
-  devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+            plugins: ['transform-flow-strip-types']
+          }
+        }
+      }
+    ]
+  },
+  devtool: 'source-map'
+
 };
