@@ -1,10 +1,19 @@
+// @flow
+
+import { type State } from '../util/state';
+
+
 export default class Card {
-  constructor(image, state) {
+  image: string;
+  state: State;
+  stateChangeCallback: (State) => void;
+
+  constructor(image: string, state: State) {
     this.image = image;
     this.state = state;
   }
 
-  setState(newState) {
+  setState(newState: State) {
     this.state = newState;
     if (typeof this.stateChangeCallback !== 'undefined') {
       this.stateChangeCallback(newState);
@@ -15,16 +24,16 @@ export default class Card {
     return this.state;
   }
 
-  isMatchingCard(otherCard) {
+  isMatchingCard(otherCard: Card) {
     return this.image === otherCard.image;
   }
 
   toString() {
-    return `{ image: ${this.image}, state: ${this.state}}`;
+    return `{ image: ${this.image}, state: ${this.state.toString()}}`;
   }
 
   // stateChangeCallback accepts one parameter, which is the change state
-  bindChangeState(stateChangeCallback) {
+  bindChangeState(stateChangeCallback: (State) => void): void {
     this.stateChangeCallback = stateChangeCallback;
   }
 }

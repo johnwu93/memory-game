@@ -1,5 +1,12 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -13,11 +20,11 @@
     "eol-last": 2,
     "guard-for-in": "error",
     "object-curly-spacing": 0,
-    "comma-dangle": [
+    "prefer-arrow-callback": [
       "error",
       {
-        "functions": "ignore",
-        "arrays": "always-multiline"
+        "allowNamedFunctions": false,
+        "allowUnboundThis": true
       }
     ]
   }

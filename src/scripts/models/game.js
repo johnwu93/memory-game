@@ -1,26 +1,33 @@
+// @flow
 import { STATE, isStateEqual } from '../util/state';
+import Card from './card';
 
 
 export default class Game {
-  constructor(cardsInput) {
+  cards: Array<Card>;
+  currentlyPickedCards: Array<Card>;
+  mismatchedCards: Array<Card>;
+  numMatches: number;
+
+  constructor(cardsInput: Array<Card>) {
     this.cards = cardsInput;
-    this.currentlyPickedCards = cardsInput.filter(
-      card => isStateEqual(card.getState(), STATE.PICKED)
-    );
-    this.mismatchedCards = cardsInput.filter(
-      card => isStateEqual(card.getState(), STATE.MISMATCH)
-    );
+    this.currentlyPickedCards = cardsInput.filter(card => (
+      isStateEqual(card.getState(), STATE.PICKED)
+    ));
+    this.mismatchedCards = cardsInput.filter(card => (
+      isStateEqual(card.getState(), STATE.MISMATCH)
+    ));
     this.numMatches = 0;
   }
 
-  processInput(index) {
+  processInput(index: number) {
     this.pickCard(this.cards[index]);
     if (this.isWin()) {
       // Todo display win modal
     }
   }
 
-  pickCard(card) {
+  pickCard(card: Card) {
     if (isStateEqual(card.getState(), STATE.FACEDOWN)) {
       this.computeFaceUpState(card);
     } else {
@@ -28,7 +35,7 @@ export default class Game {
     }
   }
 
-  computeFaceUpState(card) {
+  computeFaceUpState(card: Card) {
     if (this.currentlyPickedCards.length === 0) {
       if (this.mismatchedCards.length === 2) {
         this.hideMismatchedCards();
@@ -47,7 +54,7 @@ export default class Game {
     this.mismatchedCards = [];
   }
 
-  computeMatchCards(thisCard, thatCard) {
+  computeMatchCards(thisCard: Card, thatCard: Card) {
     if (thisCard.isMatchingCard(thatCard)) {
       thisCard.setState(STATE.MATCH);
       thatCard.setState(STATE.MATCH);

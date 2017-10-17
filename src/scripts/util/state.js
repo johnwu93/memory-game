@@ -1,11 +1,19 @@
+// @flow
+
+const FACEDOWN = {value: 'FACEDOWN', css: 'mycard--face-down'};
+const PICKED = {value: 'PICKED', css: 'mycard--picked'};
+const MATCH = {value: 'MATCHED', css: 'mycard--match'};
+const MISMATCH = {value: 'MATCHED', css: 'mycard--mismatch'};
+
+export type State = typeof FACEDOWN | typeof PICKED | typeof MATCH | typeof MISMATCH;
 const STATE = Object.freeze({
-  FACEDOWN: {value: 'FACEDOWN', css: 'mycard--face-down'},
-  PICKED: {value: 'PICKED', css: 'mycard--picked'},
-  MATCH: {value: 'MATCHED', css: 'mycard--match'},
-  MISMATCH: {value: 'MATCHED', css: 'mycard--mismatch'}
+  FACEDOWN,
+  PICKED,
+  MATCH,
+  MISMATCH,
 });
 
-const isStateEqual = function isState(thisState, thatState) {
+const isStateEqual = function isState(thisState: State, thatState: State) {
   return thisState === thatState;
 };
 
