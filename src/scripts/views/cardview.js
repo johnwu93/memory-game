@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { STATE, isStateEqual } from '../util/state';
+import { STATE } from '../util/state';
 
 const END_ANIMATION_EVENTS = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 const MATCH_ANIMATION = 'animated rubberBand';
@@ -29,9 +29,7 @@ export default class CardView {
 
   // callback is a function that accepts an id value as input
   bindFaceDownClick(chooseCallback) {
-    $(this.cardSelector).on('click', `.${STATE.FACEDOWN.css}`,
-      () => chooseCallback(this.id)
-    );
+    $(this.cardSelector).on('click', `.${STATE.FACEDOWN.css}`, () => chooseCallback(this.id));
   }
 
   renderAnimationTransition(animationEffectString) {
@@ -71,14 +69,12 @@ export default class CardView {
 
   addClassAnimation(animationEffect, followupAnimationCallback) {
     $(this.cardContent).addClass(`${animationEffect} ${this.state.css}`)
-      .one(END_ANIMATION_EVENTS,
-        () => followupAnimationCallback(animationEffect)
-      );
+      .one(END_ANIMATION_EVENTS, () => followupAnimationCallback(animationEffect));
   }
 
   removeClassAnimation(animationEffect) {
     const removeQuery = Object.values(STATE)
-      .filter(iterState => !isStateEqual(iterState, this.state))
+      .filter(iterState => !iterState.isStateEqual(this.state))
       .map(iterState => iterState.css)
       .join(' ');
 

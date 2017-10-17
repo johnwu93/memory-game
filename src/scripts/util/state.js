@@ -1,11 +1,24 @@
 // @flow
 
-const FACEDOWN = {value: 'FACEDOWN', css: 'mycard--face-down'};
-const PICKED = {value: 'PICKED', css: 'mycard--picked'};
-const MATCH = {value: 'MATCHED', css: 'mycard--match'};
-const MISMATCH = {value: 'MATCHED', css: 'mycard--mismatch'};
+export class State {
+  value: string;
+  css: string;
 
-export type State = typeof FACEDOWN | typeof PICKED | typeof MATCH | typeof MISMATCH;
+  constructor(value: string, css: string) {
+    this.value = value;
+    this.css = css;
+  }
+
+  isStateEqual(thatState: State) {
+    return this.value === thatState.value && this.css === thatState.css;
+  }
+}
+
+const FACEDOWN = new State('FACEDOWN', 'mycard--face-down');
+const PICKED = new State('PICKED', 'mycard--picked');
+const MATCH = new State('MATCHED', 'mycard--match');
+const MISMATCH = new State('MATCHED', 'mycard--mismatch');
+
 const STATE = Object.freeze({
   FACEDOWN,
   PICKED,
@@ -13,9 +26,5 @@ const STATE = Object.freeze({
   MISMATCH,
 });
 
-const isStateEqual = function isState(thisState: State, thatState: State) {
-  return thisState === thatState;
-};
 
-
-export { STATE, isStateEqual };
+export { STATE };

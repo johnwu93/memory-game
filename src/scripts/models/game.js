@@ -1,5 +1,5 @@
 // @flow
-import { STATE, isStateEqual } from '../util/state';
+import { STATE } from '../util/state';
 import Card from './card';
 
 
@@ -12,10 +12,10 @@ export default class Game {
   constructor(cardsInput: Array<Card>) {
     this.cards = cardsInput;
     this.currentlyPickedCards = cardsInput.filter(card => (
-      isStateEqual(card.getState(), STATE.PICKED)
+      card.getState().isStateEqual(STATE.PICKED)
     ));
     this.mismatchedCards = cardsInput.filter(card => (
-      isStateEqual(card.getState(), STATE.MISMATCH)
+      card.getState().isStateEqual(STATE.MISMATCH)
     ));
     this.numMatches = 0;
   }
@@ -28,7 +28,7 @@ export default class Game {
   }
 
   pickCard(card: Card) {
-    if (isStateEqual(card.getState(), STATE.FACEDOWN)) {
+    if (card.getState().isStateEqual(STATE.FACEDOWN)) {
       this.computeFaceUpState(card);
     } else {
       throw new Error(`Unable to pick card ${card.toString()}. It's already face up.`);
