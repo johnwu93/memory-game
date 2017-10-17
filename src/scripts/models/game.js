@@ -1,27 +1,35 @@
 // @flow
 import { STATE } from '../util/state';
 import Card from './card';
+import Statistics from './statistics';
+import type { RatingComputer } from './starcomputationutil';
 
 
 export default class Game {
   cards: Array<Card>;
   currentlyPickedCards: Array<Card>;
   mismatchedCards: Array<Card>;
-  numMatches: number;
+  matchedCards: Array<Card>;
+  statistics: Statistics;
 
-  constructor(cardsInput: Array<Card>) {
+  constructor(cardsInput: Array<Card>, ratingComputer: RatingComputer) {
     this.cards = cardsInput;
+    this.statistics = new Statistics(ratingComputer, this.cards.length);
     this.currentlyPickedCards = cardsInput.filter(card => (
       card.getState().isStateEqual(STATE.PICKED)
     ));
     this.mismatchedCards = cardsInput.filter(card => (
       card.getState().isStateEqual(STATE.MISMATCH)
     ));
-    this.numMatches = 0;
+
+    this.matchedCards = cardsInput.filter(card => (
+      card.getState().isStateEqual(STATE.MATCH)
+    ));
   }
 
   processInput(index: number) {
     this.pickCard(this.cards[index]);
+    this.statistics.incrementMoveCounter();
     if (this.isWin()) {
       // Todo display win modal
     }
@@ -59,7 +67,7 @@ export default class Game {
       thisCard.setState(STATE.MATCH);
       thatCard.setState(STATE.MATCH);
       this.currentlyPickedCards = [];
-      this.numMatches += 1;
+      this.matchedCards = this.matchedCards.concat(thisCard, thatCard);
     } else {
       thisCard.setState(STATE.MISMATCH);
       thatCard.setState(STATE.MISMATCH);
@@ -69,6 +77,6 @@ export default class Game {
   }
 
   isWin() {
-    return this.numMatches * 2 === this.cards.length;
+    return this.matchedCards.length === this.cards.length;
   }
 }

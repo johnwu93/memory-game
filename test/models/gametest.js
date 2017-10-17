@@ -9,10 +9,14 @@ const assertStateEquals = function assertStateEquals(currentlyPickedCard, state)
   expect(currentlyPickedCard.getState()).toBe(state);
 };
 
+const createGame = function createGame(cards: Array<Card>): Game {
+  return new Game(cards, () => 1);
+};
+
 describe('Game Logic', () => {
   it('should turn a facedown card to a picked card if there are no cards currently picked', () => {
     const faceDownCard = new Card('foo', STATE.FACEDOWN);
-    const game = new Game([faceDownCard]);
+    const game = createGame([faceDownCard]);
 
     game.pickCard(faceDownCard);
     assertStateEquals(faceDownCard, STATE.PICKED);
@@ -21,7 +25,7 @@ describe('Game Logic', () => {
   it('should turn a facedown card to a matched card if the other currently picked card matches with the facedown card', () => {
     const faceDownCard = new Card('foo', STATE.FACEDOWN);
     const currentlyPickedCard = new Card('foo', STATE.PICKED);
-    const game = new Game([faceDownCard, currentlyPickedCard]);
+    const game = createGame([faceDownCard, currentlyPickedCard]);
 
     game.pickCard(faceDownCard);
     assertStateEquals(faceDownCard, STATE.MATCH);
@@ -31,7 +35,7 @@ describe('Game Logic', () => {
   it('should turn a facedown card to a mismatched card if the other currently picked card does not match with the facedown card', () => {
     const faceDownCard = new Card('foo', STATE.FACEDOWN);
     const currentlyPickedCard = new Card('bar', STATE.PICKED);
-    const game = new Game([faceDownCard, currentlyPickedCard]);
+    const game = createGame([faceDownCard, currentlyPickedCard]);
 
     game.pickCard(faceDownCard);
     assertStateEquals(faceDownCard, STATE.MISMATCH);
@@ -50,7 +54,7 @@ describe('Game Logic', () => {
     };
     it('should flip two mismatched cards if a hidden card is picked', function testFacedown() {
       const wrongMatchCards = ['foo', 'bar'].map(image => new Card(image, STATE.MISMATCH));
-      const game = new Game([this.faceDownCard, ...wrongMatchCards]);
+      const game = createGame([this.faceDownCard, ...wrongMatchCards]);
       game.pickCard(this.faceDownCard);
 
       assertAllCardsState(wrongMatchCards, STATE.FACEDOWN);
@@ -59,7 +63,7 @@ describe('Game Logic', () => {
 
     it('should flip two mismatched cards when playing the game', function testFacedown() {
       const eventualWrongMatchCards = ['foo', 'bar'].map(image => new Card(image, STATE.FACEDOWN));
-      const game = new Game([this.faceDownCard, ...eventualWrongMatchCards]);
+      const game = createGame([this.faceDownCard, ...eventualWrongMatchCards]);
       eventualWrongMatchCards.forEach(game.pickCard.bind(game));
       game.pickCard(this.faceDownCard);
 
@@ -74,7 +78,7 @@ describe('Game Logic', () => {
     beforeEach(() => {
       faceDownCard = new Card('foo', STATE.FACEDOWN);
       const currentlyPickedCard = new Card('foo', STATE.FACEDOWN);
-      game = new Game([faceDownCard, currentlyPickedCard]);
+      game = createGame([faceDownCard, currentlyPickedCard]);
       game.pickCard(currentlyPickedCard);
     });
 
@@ -85,6 +89,29 @@ describe('Game Logic', () => {
 
     it('should continue game', () => {
       expect(game.isWin()).toBe(false);
+    });
+  });
+
+  describe('statistics', () => {
+    beforeEach(function setup() {
+      this.faceDownCards = [new Card('foo', STATE.FACEDOWN), new Card('foo', STATE.FACEDOWN)];
+      this.game = new Game(this.faceDownCards, numMoves => (numMoves === 1 ? 3 : 2));
+    });
+
+    it('should compute number of moves correctly', function testNumMoves() {
+      this.game.processInput(0);
+      expect(this.game.statistics.getNumberMoves()).toBe(1);
+
+      this.game.processInput(1);
+      expect(this.game.statistics.getNumberMoves()).toBe(2);
+    });
+
+    it('should compute ratings correctly', function testNumMoves() {
+      this.game.processInput(0);
+      expect(this.game.statistics.computeStarRating()).toBe(3);
+
+      this.game.processInput(1);
+      expect(this.game.statistics.computeStarRating()).toBe(2);
     });
   });
 });

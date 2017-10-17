@@ -6,6 +6,7 @@ import Card from '../models/card';
 import Game from '../models/game';
 import GameController from './gamecontroller';
 import GameView from '../views/gameview';
+import computeRating from '../models/starcomputationutil';
 
 
 export default function initialize(cardsInput) {
@@ -24,7 +25,7 @@ export default function initialize(cardsInput) {
     cardModels.push(cardModel);
   });
 
-  const gameModel = new Game(cardModels);
+  const gameModel = new Game(cardModels, computeRating);
   const gameView = new GameView(cardViews);
   // eslint-disable-next-line no-new
   new GameController(gameView, gameModel);
