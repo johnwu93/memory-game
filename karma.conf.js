@@ -23,15 +23,30 @@ module.exports = function configSettings(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['webpack', 'sourcemap']
+      'test/**/*.js': ['webpack', 'sourcemap'],
     },
 
     webpack: {
-      devtool: 'inline-source-map'
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['env'],
+                plugins: ['transform-flow-strip-types'],
+              },
+            },
+          },
+        ],
+      },
+      devtool: 'inline-source-map',
     },
 
     webpackServer: {
-      noInfo: true
+      noInfo: true,
     },
 
     // test results reporter to use
@@ -65,6 +80,6 @@ module.exports = function configSettings(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
   });
 };
