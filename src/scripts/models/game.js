@@ -2,7 +2,6 @@
 import { STATE } from '../util/state';
 import Card from './card';
 import Statistics from './statistics';
-import type { RatingComputer } from './starcomputationutil';
 
 
 export default class Game {
@@ -12,9 +11,9 @@ export default class Game {
   matchedCards: Array<Card>;
   statistics: Statistics;
 
-  constructor(cardsInput: Array<Card>, ratingComputer: RatingComputer) {
+  constructor(cardsInput: Array<Card>, statistics: Statistics) {
     this.cards = cardsInput;
-    this.statistics = new Statistics(ratingComputer, this.cards.length);
+    this.statistics = statistics;
     this.currentlyPickedCards = cardsInput.filter(card => (
       card.getState().isStateEqual(STATE.PICKED)
     ));

@@ -3,6 +3,7 @@
 import Card from '../../src/scripts/models/card';
 import { STATE } from '../../src/scripts/util/state';
 import Game from '../../src/scripts/models/game';
+import Statistics from '../../src/scripts/models/statistics';
 
 
 const assertStateEquals = function assertStateEquals(currentlyPickedCard, state) {
@@ -10,7 +11,7 @@ const assertStateEquals = function assertStateEquals(currentlyPickedCard, state)
 };
 
 const createGame = function createGame(cards: Array<Card>): Game {
-  return new Game(cards, () => 1);
+  return new Game(cards, new Statistics(numMoves => (numMoves <= 1 ? 3 : 2)));
 };
 
 describe('Game Logic', () => {
@@ -95,23 +96,27 @@ describe('Game Logic', () => {
   describe('statistics', () => {
     beforeEach(function setup() {
       this.faceDownCards = [new Card('foo', STATE.FACEDOWN), new Card('foo', STATE.FACEDOWN)];
-      this.game = new Game(this.faceDownCards, numMoves => (numMoves === 1 ? 3 : 2));
+      this.statistics = new Statistics(numMoves => (numMoves <= 1 ? 3 : 2));
+      this.game = new Game(
+        this.faceDownCards,
+        this.statistics,
+      );
     });
 
     it('should compute number of moves correctly', function testNumMoves() {
       this.game.processInput(0);
-      expect(this.game.statistics.getNumberMoves()).toBe(1);
+      expect(this.game.statistics.moveCounter).toBe(1);
 
       this.game.processInput(1);
-      expect(this.game.statistics.getNumberMoves()).toBe(2);
+      expect(this.game.statistics.moveCounter).toBe(2);
     });
 
-    it('should compute ratings correctly', function testNumMoves() {
+    it('should compute ratings correctly', function testRating() {
       this.game.processInput(0);
-      expect(this.game.statistics.computeStarRating()).toBe(3);
+      expect(this.game.statistics.computeRating()).toBe(3);
 
       this.game.processInput(1);
-      expect(this.game.statistics.computeStarRating()).toBe(2);
+      expect(this.game.statistics.computeRating()).toBe(2);
     });
   });
 });
