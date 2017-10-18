@@ -5,7 +5,7 @@ export default class Statistics {
   moveCounter: number;
   ratingComputer: RatingComputer;
   counterNotifier: (number) => void;
-  ratingNotifier: (number) => void;
+  ratingNotifier: (Rating) => void;
 
   constructor(ratingComputer: RatingComputer) {
     this.moveCounter = 0;
@@ -31,7 +31,7 @@ export default class Statistics {
     return rating;
   }
 
-  setRatingNotifier(ratingNotifier: (number) => void) {
+  setRatingNotifier(ratingNotifier: (Rating) => void) {
     this.ratingNotifier = ratingNotifier;
   }
 }

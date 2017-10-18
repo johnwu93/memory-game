@@ -1,13 +1,22 @@
+// @flow
+
 import { STATE, State } from '../util/state';
+import CardView from '../views/cardview';
+import Card from '../models/card';
 
 export default class CardController {
-  constructor(cardView, cardModel) {
+  cardView: CardView;
+  cardModel: Card;
+
+  constructor(cardView: CardView, cardModel: Card) {
     this.cardView = cardView;
     this.cardModel = cardModel;
+  }
+
+  bindEvents() {
     this.cardModel.bindChangeState(this.changeCardStateView.bind(this));
   }
 
-  // eslint-disable-next-line flowtype/no-types-missing-file-annotation
   changeCardStateView(modelState: State) {
     // noinspection IfStatementWithTooManyBranchesJS
     if (modelState.isStateEqual(STATE.MATCH)) {
@@ -19,7 +28,7 @@ export default class CardController {
     } else if (modelState.isStateEqual(STATE.PICKED)) {
       this.cardView.setPicked();
     } else {
-      throw new TypeError(`CardController cannot process state ${modelState} for CarView`);
+      throw new TypeError(`CardController cannot process state ${modelState.toString()} for CarView`);
     }
   }
 }

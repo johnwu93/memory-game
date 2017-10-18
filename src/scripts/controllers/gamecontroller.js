@@ -1,19 +1,37 @@
+// @flow
+
 import CardController from './cardcontroller';
+import GameView from '../views/gameview';
+import Game from '../models/game';
+import CardView from '../views/cardview';
+import StatisticsController from './statisticscontroller';
 
 export default class GameController {
-  constructor(view, model) {
-    this.view = view;
-    this.model = model;
-    this.view.cards.forEach(this.bindEvents.bind(this));
+  gameView: GameView;
+  gameModel: Game;
+
+  constructor(gameView: GameView, gameModel: Game) {
+    this.gameView = gameView;
+    this.gameModel = gameModel;
   }
 
-  bindEvents(cardView, index) {
+  bindEvents() {
+    this.gameView.cards.forEach(this.bindCardEvents.bind(this));
+    const statisticsController = new StatisticsController(
+      this.gameView.statistics,
+      this.gameModel.statistics,
+    );
+    statisticsController.bindEvents();
+    statisticsController.setView();
+  }
+
+  bindCardEvents(cardView: CardView, index: number) {
     cardView.bindFaceDownClick(this.pickFaceDownCard.bind(this));
-    // eslint-disable-next-line no-new
-    new CardController(cardView, this.model.cards[index]);
+    const cardController = new CardController(cardView, this.gameModel.cards[index]);
+    cardController.bindEvents();
   }
 
-  pickFaceDownCard(id) {
-    this.model.processInput(id);
+  pickFaceDownCard(id: number) {
+    this.gameModel.processInput(id);
   }
 }
