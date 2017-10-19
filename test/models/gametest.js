@@ -4,6 +4,7 @@ import Card from '../../src/scripts/models/card';
 import { STATE } from '../../src/scripts/util/state';
 import Game from '../../src/scripts/models/game';
 import Statistics from '../../src/scripts/models/statistics';
+import assertNotify from './util';
 
 
 const assertStateEquals = function assertStateEquals(currentlyPickedCard, state) {
@@ -84,8 +85,11 @@ describe('Game Logic', () => {
     });
 
     it('should complete game based on matching all cards', () => {
-      game.pickCard(faceDownCard);
-      expect(game.isWin()).toBe(true);
+      assertNotify((notifier) => {
+        game.setNotify(notifier);
+        game.processInput(0);
+        expect(game.isWin()).toBe(true);
+      });
     });
 
     it('should continue game', () => {
@@ -93,7 +97,7 @@ describe('Game Logic', () => {
     });
   });
 
-  describe('statistics', () => {
+  describe('statistics usage', () => {
     beforeEach(function setup() {
       this.faceDownCards = [new Card('foo', STATE.FACEDOWN), new Card('foo', STATE.FACEDOWN)];
       this.statistics = new Statistics(numMoves => (numMoves <= 1 ? 3 : 2));
