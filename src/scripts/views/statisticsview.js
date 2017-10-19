@@ -9,6 +9,8 @@ const template = `
     </ul>
 
     Moves: <span class="moves"></span>
+    
+    Time: <span class="timer"></span>
 
     <div class="restart">
       <i class="fa fa-repeat"></i>
@@ -20,16 +22,19 @@ export default class StatisticsView {
   statsSelector: JQuery;
   ratingSelector: JQuery;
   moveSelector: JQuery;
+  timerSelector: JQuery;
 
   constructor() {
     this.statsSelector = $(template);
     this.ratingSelector = $(this.statsSelector).find('.stars');
     this.moveSelector = $(this.statsSelector).find('.moves');
+    this.timerSelector = $(this.statsSelector).find('.timer');
   }
 
-  initializeRendering(numberMoves: number, rating: number) {
+  initializeRendering(numberMoves: number, rating: number, time: number) {
     this.updateMoves(numberMoves);
     this.updateRating(rating);
+    this.updateTimer(time);
     $('.statistics').append(this.statsSelector);
   }
 
@@ -42,5 +47,9 @@ export default class StatisticsView {
 
   updateMoves(newMoves: number) {
     $(this.moveSelector).html(newMoves.toString());
+  }
+
+  updateTimer(time: number) {
+    $(this.timerSelector).html(time.toString());
   }
 }
