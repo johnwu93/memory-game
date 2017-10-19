@@ -10,6 +10,7 @@ export default class Game {
   mismatchedCards: Array<Card>;
   matchedCards: Array<Card>;
   statistics: Statistics;
+  notifyWin: () => void;
 
   constructor(cardsInput: Array<Card>, statistics: Statistics) {
     this.cards = cardsInput;
@@ -26,11 +27,17 @@ export default class Game {
     ));
   }
 
+  setNotify(notifyWin: () => void) {
+    this.notifyWin = notifyWin;
+  }
+
   processInput(index: number) {
     this.pickCard(this.cards[index]);
     this.statistics.incrementMoveCounter();
     if (this.isWin()) {
-      // Todo display win modal
+      if (typeof this.notifyWin !== 'undefined') {
+        this.notifyWin();
+      }
     }
   }
 
