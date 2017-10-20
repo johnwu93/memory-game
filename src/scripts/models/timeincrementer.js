@@ -1,14 +1,22 @@
 /* eslint-disable class-methods-use-this */
 // @flow
 
-import EventIncrementer from './eventincrementer';
 import type { Runnable } from './eventincrementer';
+import EventIncrementer from './eventincrementer';
+
+const myTimerID = new WeakMap();
 
 export default class TimeIncrementer extends EventIncrementer {
+  terminateTimer() {
+    clearInterval(myTimerID.get(this));
+  }
+
   // noinspection JSUnusedGlobalSymbols
   planIncrementEvent(incrementTask: Runnable): void {
-    setInterval(() => {
+    const id = setInterval(() => {
       incrementTask();
     }, 1000);
+
+    myTimerID.set(this, id);
   }
 }

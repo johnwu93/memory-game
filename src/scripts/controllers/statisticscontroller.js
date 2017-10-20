@@ -46,6 +46,7 @@ export default class StatisticsController {
   }
 
   showWinModal() {
+    this.timeIncrementer.terminateTimer();
     const rating = this.model.computeRating();
     const time = this.timeIncrementer.counter;
     const moves = this.model.moveCounter;
