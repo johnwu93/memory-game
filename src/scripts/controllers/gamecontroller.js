@@ -23,6 +23,7 @@ export default class GameController {
     );
     statisticsController.bindEvents();
     statisticsController.setView();
+    this.gameModel.setWinNotification(statisticsController.showWinModal.bind(statisticsController));
   }
 
   bindCardEvents(cardView: CardView, index: number) {

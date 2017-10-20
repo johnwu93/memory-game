@@ -27,7 +27,7 @@ export default class Game {
     ));
   }
 
-  setNotify(notifyWin: () => void) {
+  setWinNotification(notifyWin: () => void) {
     this.notifyWin = notifyWin;
   }
 

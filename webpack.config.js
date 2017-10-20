@@ -1,6 +1,8 @@
 /* eslint-disable */
 const path = require('path');
+const webpack = require('webpack');
 
+// noinspection JSUnresolvedFunction
 module.exports = {
   entry: './src/scripts/main.js',
   resolve: {
@@ -13,6 +15,14 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default'],
+    })
+  ],
   module: {
     rules: [
       {

@@ -1,9 +1,10 @@
 // @flow
 
 import $ from 'jquery';
+import renderRating from './renderrating';
 
 
-const template = `
+const TEMPLATE = `
   <section class="score-panel">
     <ul class="stars">
     </ul>
@@ -25,7 +26,7 @@ export default class StatisticsView {
   timerSelector: JQuery;
 
   constructor() {
-    this.statsSelector = $(template);
+    this.statsSelector = $(TEMPLATE);
     this.ratingSelector = $(this.statsSelector).find('.stars');
     this.moveSelector = $(this.statsSelector).find('.moves');
     this.timerSelector = $(this.statsSelector).find('.timer');
@@ -39,9 +40,7 @@ export default class StatisticsView {
   }
 
   updateRating(newRating: number) {
-    const ratingMarkDown = Array
-      .from({length: newRating}, () => '<li><i class="fa fa-star"></i></li>')
-      .join('\n');
+    const ratingMarkDown = renderRating(newRating);
     $(this.ratingSelector).html(ratingMarkDown);
   }
 

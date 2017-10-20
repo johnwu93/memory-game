@@ -86,7 +86,7 @@ describe('Game Logic', () => {
 
     it('should complete game based on matching all cards', () => {
       assertNotify((notifier) => {
-        game.setNotify(notifier);
+        game.setWinNotification(notifier);
         game.processInput(0);
         expect(game.isWin()).toBe(true);
       });

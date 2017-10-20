@@ -4,16 +4,19 @@ import StatisticsView from '../views/statisticsview';
 import Statistics from '../models/statistics';
 import type { Rating } from '../models/ratingcomputer';
 import TimeIncrementer from '../models/timeincrementer';
+import ModalView from '../views/modalview';
 
 export default class StatisticsController {
   view: StatisticsView;
   model: Statistics;
   timeIncrementer: TimeIncrementer;
+  modalView: ModalView;
 
   constructor(view: StatisticsView, model: Statistics) {
     this.view = view;
     this.model = model;
     this.timeIncrementer = new TimeIncrementer(this.updateTimer.bind(this));
+    this.modalView = new ModalView();
   }
 
   setView() {
@@ -40,5 +43,12 @@ export default class StatisticsController {
 
   updateTimer(time: number) {
     this.view.updateTimer(time);
+  }
+
+  showWinModal() {
+    const rating = this.model.computeRating();
+    const time = this.timeIncrementer.counter;
+    const moves = this.model.moveCounter;
+    this.modalView.show(rating, time, moves);
   }
 }
