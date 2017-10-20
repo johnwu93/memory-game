@@ -11,7 +11,7 @@ describe('Time Incrementer', () => {
     spyOn(window, 'clearInterval').and.callThrough();
     timeIncrementer.setup();
     timeIncrementer.terminateTimer();
-    expect(window.setInterval.calls.count()).toEqual(1);
-    expect(window.clearInterval.calls.count()).toEqual(1);
+    expect(window.setInterval).toHaveBeenCalledTimes(1);
+    expect(window.clearInterval).toHaveBeenCalledTimes(1);
   });
 });

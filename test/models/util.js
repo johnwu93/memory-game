@@ -13,7 +13,7 @@ const assertNotify = function assertNotify(
   const notifyName = testContext.notify.name;
   spyOn(testContext, notifyName).and.callThrough();
   testRunnerCallback(testContext.notify);
-  expect(testContext.notify.calls.count()).toEqual(numCalls);
+  expect(testContext.notify).toHaveBeenCalledTimes(numCalls);
 };
 
 export default assertNotify;
