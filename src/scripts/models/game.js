@@ -1,5 +1,5 @@
 // @flow
-import { STATE } from '../util/state';
+import { CARD_STATE } from '../util/cardstate';
 import Card from './card';
 import Statistics from './statistics';
 
@@ -16,14 +16,14 @@ export default class Game {
     this.cards = cardsInput;
     this.statistics = statistics;
     this.currentlyPickedCards = cardsInput.filter(card => (
-      card.getState().isStateEqual(STATE.PICKED)
+      card.getState().isStateEqual(CARD_STATE.PICKED)
     ));
     this.mismatchedCards = cardsInput.filter(card => (
-      card.getState().isStateEqual(STATE.MISMATCH)
+      card.getState().isStateEqual(CARD_STATE.MISMATCH)
     ));
 
     this.matchedCards = cardsInput.filter(card => (
-      card.getState().isStateEqual(STATE.MATCH)
+      card.getState().isStateEqual(CARD_STATE.MATCH)
     ));
   }
 
@@ -42,7 +42,7 @@ export default class Game {
   }
 
   pickCard(card: Card) {
-    if (card.getState().isStateEqual(STATE.FACEDOWN)) {
+    if (card.getState().isStateEqual(CARD_STATE.FACEDOWN)) {
       this.computeFaceUpState(card);
     } else {
       throw new Error(`Unable to pick card ${card.toString()}. It's already face up.`);
@@ -54,7 +54,7 @@ export default class Game {
       if (this.mismatchedCards.length === 2) {
         this.hideMismatchedCards();
       }
-      card.setState(STATE.PICKED);
+      card.setState(CARD_STATE.PICKED);
       this.currentlyPickedCards = [card];
     } else if (this.currentlyPickedCards.length === 1) {
       this.computeMatchCards(card, this.currentlyPickedCards[0]);
@@ -64,19 +64,19 @@ export default class Game {
   }
 
   hideMismatchedCards() {
-    this.mismatchedCards.forEach(mismatchedCard => mismatchedCard.setState(STATE.FACEDOWN));
+    this.mismatchedCards.forEach(mismatchedCard => mismatchedCard.setState(CARD_STATE.FACEDOWN));
     this.mismatchedCards = [];
   }
 
   computeMatchCards(thisCard: Card, thatCard: Card) {
     if (thisCard.isMatchingCard(thatCard)) {
-      thisCard.setState(STATE.MATCH);
-      thatCard.setState(STATE.MATCH);
+      thisCard.setState(CARD_STATE.MATCH);
+      thatCard.setState(CARD_STATE.MATCH);
       this.currentlyPickedCards = [];
       this.matchedCards = this.matchedCards.concat(thisCard, thatCard);
     } else {
-      thisCard.setState(STATE.MISMATCH);
-      thatCard.setState(STATE.MISMATCH);
+      thisCard.setState(CARD_STATE.MISMATCH);
+      thatCard.setState(CARD_STATE.MISMATCH);
       this.mismatchedCards = [thisCard, thatCard];
       this.currentlyPickedCards = [];
     }

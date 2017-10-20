@@ -9,11 +9,11 @@ import GameController from './gamecontroller';
 import GameView from '../views/gameview';
 import createTotalCardsRatingComputer from '../models/ratingcomputer';
 import Statistics from '../models/statistics';
-import { State } from '../util/state';
+import { CardState } from '../util/cardstate';
 import StatisticsView from '../views/statisticsview';
 
 
-export default function initialize(cardsInput: Array<{ image: string, state: State }>) {
+export default function initialize(cardsInput: Array<{ image: string, state: CardState }>) {
   const deck = $('.deck__layout .row');
 
   const cardViews = [];

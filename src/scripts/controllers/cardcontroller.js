@@ -1,6 +1,6 @@
 // @flow
 
-import { STATE, State } from '../util/state';
+import { CARD_STATE, CardState } from '../util/cardstate';
 import CardView from '../views/cardview';
 import Card from '../models/card';
 
@@ -17,15 +17,15 @@ export default class CardController {
     this.cardModel.bindChangeState(this.changeCardStateView.bind(this));
   }
 
-  changeCardStateView(modelState: State) {
+  changeCardStateView(modelState: CardState) {
     // noinspection IfStatementWithTooManyBranchesJS
-    if (modelState.isStateEqual(STATE.MATCH)) {
+    if (modelState.isStateEqual(CARD_STATE.MATCH)) {
       this.cardView.setMatch();
-    } else if (modelState.isStateEqual(STATE.MISMATCH)) {
+    } else if (modelState.isStateEqual(CARD_STATE.MISMATCH)) {
       this.cardView.setMismatch();
-    } else if (modelState.isStateEqual(STATE.FACEDOWN)) {
+    } else if (modelState.isStateEqual(CARD_STATE.FACEDOWN)) {
       this.cardView.setFacedown();
-    } else if (modelState.isStateEqual(STATE.PICKED)) {
+    } else if (modelState.isStateEqual(CARD_STATE.PICKED)) {
       this.cardView.setPicked();
     } else {
       throw new TypeError(`CardController cannot process state ${modelState.toString()} for CarView`);

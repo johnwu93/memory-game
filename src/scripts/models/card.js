@@ -1,19 +1,19 @@
 // @flow
 
-import { type State } from '../util/state';
+import { type CardState } from '../util/cardstate';
 
 
 export default class Card {
   image: string;
-  state: State;
-  stateChangeCallback: (State) => void;
+  state: CardState;
+  stateChangeCallback: (CardState) => void;
 
-  constructor(image: string, state: State) {
+  constructor(image: string, state: CardState) {
     this.image = image;
     this.state = state;
   }
 
-  setState(newState: State) {
+  setState(newState: CardState) {
     this.state = newState;
     if (typeof this.stateChangeCallback !== 'undefined') {
       this.stateChangeCallback(newState);
@@ -33,7 +33,7 @@ export default class Card {
   }
 
   // stateChangeCallback accepts one parameter, which is the change state
-  bindChangeState(stateChangeCallback: (State) => void): void {
+  bindChangeState(stateChangeCallback: (CardState) => void): void {
     this.stateChangeCallback = stateChangeCallback;
   }
 }
