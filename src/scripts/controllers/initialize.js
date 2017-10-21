@@ -11,7 +11,7 @@ import createTotalCardsRatingComputer from '../models/ratingcomputer';
 import Statistics from '../models/statistics';
 import { CardState } from '../util/cardstate';
 import StatisticsView from '../views/statisticsview';
-
+import createGameEngine from '../models/engine/gameenginefactory';
 
 export default function initialize(cardsInput: Array<{ image: string, state: CardState }>) {
   const deck = $('.deck__layout .row');
@@ -29,8 +29,10 @@ export default function initialize(cardsInput: Array<{ image: string, state: Car
   });
 
   const gameStatistics = new Statistics(createTotalCardsRatingComputer(cardsInput.length));
-  const gameModel = new Game(cardModels, gameStatistics);
 
+  const gameEngine = createGameEngine(cardModels);
+
+  const gameModel = new Game(cardModels, gameEngine, gameStatistics);
   const gameView = new GameView(cardViews, new StatisticsView());
   const gameController = new GameController(gameView, gameModel);
   gameController.bindEvents();

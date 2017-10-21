@@ -3,8 +3,9 @@
 import type { GameEngine } from './gameengine';
 import Card from '../card';
 import type { GameContext } from '../gamecontext';
-import { GAME_CONTEXT_FACTORY, GAME_CONTEXT_NAMES } from '../gamecontext';
+import GAME_CONTEXT_NAMES from '../gamecontext';
 import { CARD_STATE } from '../../util/cardstate';
+import { GAME_CONTEXT_FACTORY } from '../gamecontextfactory';
 
 const flipCardFaceup = function flipCardFaceup(card: Card) {
   const newContext = GAME_CONTEXT_FACTORY.pickedSingleCard(card);
@@ -45,19 +46,30 @@ const pickFacedownCardAfterMismatched = function pickFacedownCardAfterMismatched
 
 export default class GameEngineImpl implements GameEngine {
   matchedCards: Array<Card>;
+  numCards: number;
+  gameContext: GameContext;
 
-  constructor(matchedCards: Array<Card>) {
+  constructor(matchedCards: Array<Card>, gameContext: GameContext, numCards: number) {
     this.matchedCards = matchedCards;
+    this.numCards = numCards;
+    this.gameContext = gameContext;
   }
 
-  pickCard(card: Card, gameContext: GameContext): GameContext {
-    if (gameContext.type === GAME_CONTEXT_NAMES.NONE_SELECTED) {
-      return flipCardFaceup(card);
-    } else if (gameContext.type === GAME_CONTEXT_NAMES.PICKED_SINGLE_CARD) {
-      return computeMatch(card, gameContext.card, this.matchedCards);
-    } else if (gameContext.type === GAME_CONTEXT_NAMES.MISMATCHED_PAIR) {
-      return pickFacedownCardAfterMismatched(card, gameContext.first, gameContext.second);
+  pickCard(card: Card): void {
+    // noinspection IfStatementWithTooManyBranchesJS
+    if (this.gameContext.type === GAME_CONTEXT_NAMES.NONE_SELECTED) {
+      this.gameContext = flipCardFaceup(card);
+    } else if (this.gameContext.type === GAME_CONTEXT_NAMES.PICKED_SINGLE_CARD) {
+      this.gameContext = computeMatch(card, this.gameContext.card, this.matchedCards);
+    } else if (this.gameContext.type === GAME_CONTEXT_NAMES.MISMATCHED_PAIR) {
+      this.gameContext =
+        pickFacedownCardAfterMismatched(card, this.gameContext.first, this.gameContext.second);
+    } else {
+      throw new TypeError('Invalid gameContext State');
     }
-    throw new TypeError('Invalid state to be picked');
+  }
+
+  isWin(): boolean {
+    return this.matchedCards.length === this.numCards;
   }
 }
