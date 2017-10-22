@@ -8,27 +8,28 @@ const template = `
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <section class="win__title">
             <div class="text-center">
-              <h1>Congratulations!</h1>
+              <h1 class="win__title__header">Congratulations!</h1>
               <h2>You Won!</h2>
             </div>
           </section>
 
           <section class="win__statistics">
             <div class="win__statistics__rating">
-              Rating: <div class="win__statistics__rating--value"></div>
+              Rating: <span class="win__statistics__rating--value"></span>
             </div>
             <div class="win__statistics__time">
-              Time: <div class="win__statistics__time--value"></div>
+              Time: <span class="win__statistics__time--value"></span>
             </div>
             <div class="win__statistics__moves">
-              Moves: <div class="win__statistics__moves--value"></div>
+              Moves: <span class="win__statistics__moves--value"></span>
             </div>
           </section>
         </div>
@@ -64,7 +65,7 @@ export default class ModalView {
   }
 
   updateRating(rating: number) {
-    $(this.ratingSelector).html(renderRating(rating));
+    $(this.ratingSelector).html(`<ul class="stars d-inline">${renderRating(rating)}</ul>`);
   }
 
   updateTime(time: number) {
