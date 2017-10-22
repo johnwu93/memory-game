@@ -5,18 +5,22 @@ import renderRating from './renderrating';
 
 
 const TEMPLATE = `
-  <section class="score-panel">
-    <ul class="stars">
-    </ul>
 
-    Moves: <span class="moves"></span>
-    
-    Time: <span class="timer"></span>
-
-    <div class="restart">
-      <i class="fa fa-repeat"></i>
+  <div class="container mb-2">
+    <div class="restart d-inline mx-2">
+        <i class="fa fa-repeat"></i>
     </div>
-  </section>
+    <ul class="stars d-inline"></ul>
+    
+    <div class="mx-2">
+      <div class="pr-2 d-inline">
+        Moves: <span class="moves"></span>
+      </div>
+      <div class="d-inline">
+        Time: <span class="timer"></span>
+      </div>
+    </div>
+  </div>
     `;
 
 export default class StatisticsView {
