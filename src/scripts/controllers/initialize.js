@@ -1,7 +1,5 @@
 // @flow
 
-import $ from 'jquery';
-
 import CardView from '../views/cardview';
 import Card from '../models/card';
 import Game from '../models/game';
@@ -14,8 +12,6 @@ import StatisticsView from '../views/statisticsview';
 import createGameEngine from '../models/engine/gameenginefactory';
 
 export default function initialize(cardsInput: Array<{ image: string, state: CardState }>) {
-  const deck = $('.deck__layout');
-
   const cardViews = [];
   const cardModels = [];
   cardsInput.forEach((cardInput, id) => {
@@ -24,7 +20,6 @@ export default function initialize(cardsInput: Array<{ image: string, state: Car
     const cardModel = new Card(image, state);
 
     cardViews.push(cardView);
-    deck.append(cardView.cardSelector);
     cardModels.push(cardModel);
   });
 
@@ -35,6 +30,7 @@ export default function initialize(cardsInput: Array<{ image: string, state: Car
   const gameModel = new Game(cardModels, gameEngine, gameStatistics);
   const gameView = new GameView(cardViews, new StatisticsView());
   const gameController = new GameController(gameView, gameModel);
+  gameView.renderCards();
   gameController.bindEvents();
 }
 
