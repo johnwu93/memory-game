@@ -1,23 +1,30 @@
+// @flow
 import $ from 'jquery';
 import 'bootstrap';
 import initialize from './controllers/initialize';
-import { CARD_STATE } from './util/cardstate';
+import { CARD_STATE, CardState } from './util/cardstate';
 
-const createInput = function createInput(image, state) {
+const createInput = function createInput(image: string, state: CardState) {
   return {image, state};
 };
 
-const cardsinput = [
-  createInput('fa-diamond', CARD_STATE.FACEDOWN),
-  createInput('fa-anchor', CARD_STATE.FACEDOWN),
-  createInput('fa-diamond', CARD_STATE.FACEDOWN),
-  createInput('fa-paper-plane-o', CARD_STATE.FACEDOWN),
-  createInput('fa-anchor', CARD_STATE.FACEDOWN),
-  createInput('fa-paper-plane-o', CARD_STATE.FACEDOWN),
-  createInput('fa-facebook', CARD_STATE.FACEDOWN),
-  createInput('fa-facebook', CARD_STATE.FACEDOWN),
-];
+const createFaceDownCardInput = function createFaceDownCardInput(images: Array<string>) {
+  const cards = images.map(image => (
+    [createInput(image, CARD_STATE.FACEDOWN), createInput(image, CARD_STATE.FACEDOWN)]
+  ));
+  return cards.reduce((accumulationList, currList) => accumulationList.concat(currList), []);
+};
+
 
 $(() => {
-  initialize(cardsinput);
+  initialize(createFaceDownCardInput([
+    'fa-diamond',
+    'fa-anchor',
+    'fa-paper-plane-o',
+    'fa-facebook',
+    'fa-coffee',
+    'fa-bolt',
+    'fa-cube',
+    'fa-bicycle',
+  ]));
 });
