@@ -1,0 +1,19 @@
+$animation-speed: 500ms;
+$flip-animations: $animation-speed /2;
+
+.rubberBand,
+.shake {
+  animation-duration: $animation-speed;
+  -webkit-animation-duration: $animation-speed;
+  -moz-animation-duration: $animation-speed;
+  animation-fill-mode: both;
+}
+
+
+.flipInY,
+.flipOutY {
+  animation-duration: $flip-animations;
+  -webkit-animation-duration: $flip-animations;
+  -moz-animation-duration: $flip-animations;
+  animation-fill-mode: both;
+}

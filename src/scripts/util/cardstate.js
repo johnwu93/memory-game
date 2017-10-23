@@ -18,8 +18,8 @@ const FACEDOWN = new CardState('FACEDOWN', 'card--face-down');
 const PICKED = new CardState('PICKED', 'card--picked');
 const MATCH = new CardState('MATCHED', 'card--match');
 const MISMATCH = new CardState('MATCHED', 'card--mismatch');
-
-const CARD_STATE = Object.freeze({
+type CardMap = { [key: string]: CardState };
+const CARD_STATE: CardMap = Object.freeze({
   FACEDOWN,
   PICKED,
   MATCH,

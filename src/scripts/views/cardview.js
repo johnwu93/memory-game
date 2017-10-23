@@ -1,14 +1,22 @@
+// @flow
+
 import $ from 'jquery';
-import { CARD_STATE } from '../util/cardstate';
+import { CARD_STATE, CardState } from '../util/cardstate';
 
 const END_ANIMATION_EVENTS = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-const MATCH_ANIMATION = 'animated rubberBand';
-const MISMATCH_ANIMATION = 'animated shake';
-const FLIP_IN_ANIMATION = 'animated flipOutY';
-const FLIP_OUT_ANIMATION = 'animated flipInY';
+const MATCH_ANIMATION = 'rubberBand';
+const MISMATCH_ANIMATION = 'shake';
+const FLIP_OUT_ANIMATION = 'flipOutY';
+const FLIP_IN_ANIMATION = 'flipInY';
 
 export default class CardView {
-  constructor(image, state, id) {
+  image: string;
+  state: CardState;
+  id: number;
+  cardSelector: JQuery;
+  cardContent: JQuery;
+
+  constructor(image: string, state: CardState, id: number) {
     this.image = image;
     this.state = state;
     this.id = id;
@@ -20,7 +28,7 @@ export default class CardView {
   render() {
     return `
           <section id="${this.id}" class="col-6 col-md-3 my-3">
-            <div class="${this.state.css} mx-auto">
+            <div class="card__display animated ${this.state.css} mx-auto">
               <i class="fa ${this.image}"></i>
             </div>
           </section>
@@ -28,24 +36,24 @@ export default class CardView {
   }
 
   // callback is a function that accepts an id value as input
-  bindFaceDownClick(chooseCallback) {
+  bindFaceDownClick(chooseCallback: (number) => void) {
     $(this.cardSelector).on('click', `.${CARD_STATE.FACEDOWN.css}`, () => chooseCallback(this.id));
   }
 
-  renderAnimationTransition(animationEffectString) {
-    this.addClassAnimation(animationEffectString, this.removeClassAnimation.bind(this));
+  renderAnimationTransition(animationEffect: string) {
+    this.addClassAnimation(animationEffect, this.removeClassAnimation.bind(this));
   }
 
-  animateFlip(newState) {
+  animateFlip(newState: CardState) {
     // todo fix bug when a bug when a card
     // is being flipped,
     // the animation does not appear changin to mismatched
     const cardView = this;
-    this.addClassAnimation(FLIP_IN_ANIMATION, () => {
+    this.addClassAnimation(FLIP_OUT_ANIMATION, () => {
       $(cardView.cardContent)
-        .removeClass(`${cardView.state.css} ${FLIP_IN_ANIMATION}`);
+        .removeClass(`${cardView.state.css} ${FLIP_OUT_ANIMATION}`);
       cardView.state = newState;
-      cardView.renderAnimationTransition(FLIP_OUT_ANIMATION);
+      cardView.renderAnimationTransition(FLIP_IN_ANIMATION);
     });
   }
 
@@ -67,13 +75,14 @@ export default class CardView {
     this.renderAnimationTransition(MISMATCH_ANIMATION);
   }
 
-  addClassAnimation(animationEffect, followupAnimationCallback) {
+  addClassAnimation(animationEffect: string, followupAnimationCallback: (string) => void) {
     $(this.cardContent).addClass(`${animationEffect} ${this.state.css}`)
       .one(END_ANIMATION_EVENTS, () => followupAnimationCallback(animationEffect));
   }
 
-  removeClassAnimation(animationEffect) {
-    const removeQuery = Object.values(CARD_STATE)
+  removeClassAnimation(animationEffect: string) {
+    const states : Array<CardState> = (Object.values(CARD_STATE): any);
+    const removeQuery = states
       .filter(iterState => !iterState.isStateEqual(this.state))
       .map(iterState => iterState.css)
       .join(' ');
