@@ -23,12 +23,16 @@ const template = `
             <p class="win__statistics__rating my-0">
               Rating: <span class="win__statistics__rating--value"></span>
             </p>
-            <p class="win__statistics__time my-0">
-              Time: <span class="win__statistics__time--value"></span>
-            </p>
             <p class="win__statistics__moves my-0">
               Moves: <span class="win__statistics__moves--value"></span>
             </p>
+            <p class="win__statistics__time my-0">
+              Time: <span class="win__statistics__time--value"></span>
+            </p>
+          </section>
+                    
+          <section class="win__play-again text-center">
+            <button type="button" class="btn btn-success win__play-again__button" data-dismiss="modal">Play Again?</button>
           </section>
         </article>
         <footer class="modal-footer">
@@ -44,12 +48,14 @@ export default class ModalView {
   ratingSelector: JQuery;
   timeSelector: JQuery;
   numMovesSelector: JQuery;
+  resetButton: JQuery;
 
   constructor() {
     this.modalSelector = $(template);
     this.ratingSelector = $(this.modalSelector).find('.win__statistics__rating--value');
     this.timeSelector = $(this.modalSelector).find('.win__statistics__time--value');
     this.numMovesSelector = $(this.modalSelector).find('.win__statistics__moves--value');
+    this.resetButton = $(this.modalSelector).find('.win__play-again__button');
   }
 
   show(rating: number, time: number, numMoves: number) {
@@ -72,5 +78,9 @@ export default class ModalView {
 
   updateNumMoves(numMoves: number) {
     $(this.numMovesSelector).html(numMoves.toString());
+  }
+
+  bindResetEvent(gameRestarter: () => void) {
+    $(this.resetButton).click(gameRestarter);
   }
 }

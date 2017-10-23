@@ -74,6 +74,7 @@ export default class GameController {
     statisticsController.setView();
     this.gameModel.setWinNotification(statisticsController.showWinModal.bind(statisticsController));
     statisticsController.view.bindRestartClick(this.startRandomGame.bind(this));
+    statisticsController.modalView.bindResetEvent(this.startRandomGame.bind(this));
   }
 
   bindCardEvents(cardView: CardView, index: number) {
