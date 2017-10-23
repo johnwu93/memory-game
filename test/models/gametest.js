@@ -57,5 +57,12 @@ describe('Game Logic', () => {
       this.game.processInput(1);
       expect(this.game.statistics.computeRating()).toBe(2);
     });
+
+    it('should invoke rating notifier', function testRatingNotifier() {
+      assertNotify.bind(this)((notifier) => {
+        this.game.statistics.setRatingNotifier(notifier);
+        this.game.processInput(0);
+      });
+    });
   });
 });

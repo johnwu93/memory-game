@@ -22,11 +22,12 @@ export default class Game {
 
   processInput(index: number) {
     this.gameEngine.pickCard(this.cards[index]);
-    this.statistics.incrementMoveCounter();
     if (this.gameEngine.isWin()) {
       if (typeof this.notifyWin !== 'undefined') {
         this.notifyWin();
       }
     }
+    this.statistics.computeRating();
+    this.statistics.incrementMoveCounter();
   }
 }
