@@ -5,7 +5,6 @@ import renderRating from './renderrating';
 
 
 const TEMPLATE = `
-
   <div class="container mb-2">
     <div class="restart d-inline mx-2">
         <i class="fa fa-repeat"></i>

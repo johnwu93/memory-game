@@ -4,41 +4,39 @@ import 'bootstrap';
 import renderRating from './renderrating';
 
 const template = `
-  <div class="modal fade" id="winModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <aside class="modal fade" id="winModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <section class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <header class="modal-header">
           <h5 class="modal-title"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
-        </div>
-        <div class="modal-body">
-          <section class="win__title">
-            <div class="text-center">
-              <h1 class="win__title__header">Congratulations!</h1>
-              <h2>You Won!</h2>
-            </div>
+        </header>
+        <article class="modal-body">
+          <section class="win__title text-center">
+            <h1 class="win__title__header">Congratulations!</h1>
+            <h2>You Won!</h2>
           </section>
 
           <section class="win__statistics">
-            <div class="win__statistics__rating">
+            <p class="win__statistics__rating my-0">
               Rating: <span class="win__statistics__rating--value"></span>
-            </div>
-            <div class="win__statistics__time">
+            </p>
+            <p class="win__statistics__time my-0">
               Time: <span class="win__statistics__time--value"></span>
-            </div>
-            <div class="win__statistics__moves">
+            </p>
+            <p class="win__statistics__moves my-0">
               Moves: <span class="win__statistics__moves--value"></span>
-            </div>
+            </p>
           </section>
-        </div>
-        <div class="modal-footer">
+        </article>
+        <footer class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+        </footer>
       </div>
-    </div>
-  </div>
+    </section>
+  </aside>
 `;
 
 export default class ModalView {
