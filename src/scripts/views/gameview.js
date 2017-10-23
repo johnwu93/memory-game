@@ -14,7 +14,16 @@ export default class GameView {
     this.deck = $('.deck__layout');
   }
 
+  clearCardView() {
+    $(this.deck).empty();
+  }
+
   renderCards() {
     this.cards.forEach(card => $(this.deck).append(card.cardSelector));
+  }
+
+  resetCardView() {
+    this.clearCardView();
+    this.renderCards();
   }
 }

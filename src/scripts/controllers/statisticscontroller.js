@@ -21,6 +21,7 @@ export default class StatisticsController {
 
   setView() {
     this.timeIncrementer.setup();
+    this.view.clear();
     this.view.initializeRendering(
       this.model.moveCounter,
       this.model.computeRating(),

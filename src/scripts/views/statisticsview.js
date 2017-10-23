@@ -27,19 +27,28 @@ export default class StatisticsView {
   ratingSelector: JQuery;
   moveSelector: JQuery;
   timerSelector: JQuery;
+  restartSelector: JQuery;
+  statisticsSelector: JQuery;
 
   constructor() {
     this.statsSelector = $(TEMPLATE);
     this.ratingSelector = $(this.statsSelector).find('.stars');
     this.moveSelector = $(this.statsSelector).find('.moves');
     this.timerSelector = $(this.statsSelector).find('.timer');
+    this.restartSelector = $(this.statsSelector).find('.restart');
+    this.statisticsSelector = $('.statistics');
   }
 
   initializeRendering(numberMoves: number, rating: number, time: number) {
     this.updateMoves(numberMoves);
     this.updateRating(rating);
     this.updateTimer(time);
-    $('.statistics').append(this.statsSelector);
+    this.statisticsSelector.empty();
+    this.statisticsSelector.append(this.statsSelector);
+  }
+
+  clear() {
+    this.statisticsSelector.empty();
   }
 
   updateRating(newRating: number) {
@@ -53,5 +62,9 @@ export default class StatisticsView {
 
   updateTimer(time: number) {
     $(this.timerSelector).html(time.toString());
+  }
+
+  bindRestartClick(gameRestarter: () => void) {
+    $(this.restartSelector).click(gameRestarter);
   }
 }
