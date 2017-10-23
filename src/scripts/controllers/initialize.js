@@ -14,7 +14,7 @@ import StatisticsView from '../views/statisticsview';
 import createGameEngine from '../models/engine/gameenginefactory';
 
 export default function initialize(cardsInput: Array<{ image: string, state: CardState }>) {
-  const deck = $('.deck__layout .row');
+  const deck = $('.deck__layout');
 
   const cardViews = [];
   const cardModels = [];

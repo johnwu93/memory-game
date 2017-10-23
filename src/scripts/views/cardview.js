@@ -19,11 +19,11 @@ export default class CardView {
 
   render() {
     return `
-          <div id="${this.id}" class="mycard col-6 col-md-3 my-3">
+          <section id="${this.id}" class="col-6 col-md-3 my-3">
             <div class="${this.state.css} mx-auto">
               <i class="fa ${this.image}"></i>
             </div>
-          </div>
+          </section>
           `;
   }
 

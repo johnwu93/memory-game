@@ -6,19 +6,19 @@ import renderRating from './renderrating';
 
 const TEMPLATE = `
   <div class="container mb-2">
-    <div class="restart d-inline mx-2">
+    <section class="restart d-inline mx-2">
         <i class="fa fa-repeat"></i>
-    </div>
+    </section>
     <ul class="stars d-inline"></ul>
     
-    <div class="mx-2">
-      <div class="pr-2 d-inline">
+    <section class="mx-2">
+      <p class="pr-2 d-inline">
         Moves: <span class="moves"></span>
-      </div>
-      <div class="d-inline">
+      </p>
+      <p class="d-inline">
         Time: <span class="timer"></span>
-      </div>
-    </div>
+      </p>
+    </section>
   </div>
     `;
 

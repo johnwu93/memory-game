@@ -1,5 +1,5 @@
 
-.mycard {
+.card {
   &__layout {
     height: 8rem;
     width: 8rem;
@@ -16,33 +16,33 @@
   }
 
   &--face-down {
-    @extend .mycard__layout;
-    @extend .mycard__content;
-    @extend .mycard--selectable-hover;
+    @extend .card__layout;
+    @extend .card__content;
+    @extend .card--selectable-hover;
     background: #2e3d49;
     font-size: 0;
   }
 
   &--face-up {
-    @extend .mycard__layout;
-    @extend .mycard__content;
-    @extend .mycard--unselectable-hover;
+    @extend .card__layout;
+    @extend .card__content;
+    @extend .card--unselectable-hover;
     color: white;
     font-size: 2rem;
   }
 
   &--picked {
-    @extend .mycard--face-up;
+    @extend .card--face-up;
     background: #02b3e4;
   }
 
   &--match {
-    @extend .mycard--face-up;
+    @extend .card--face-up;
     background: #02ccba;
   }
 
   &--mismatch {
-    @extend .mycard--face-up;
+    @extend .card--face-up;
     background: #e42f4f;
   }
 

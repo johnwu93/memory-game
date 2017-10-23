@@ -14,10 +14,10 @@ export class CardState {
   }
 }
 
-const FACEDOWN = new CardState('FACEDOWN', 'mycard--face-down');
-const PICKED = new CardState('PICKED', 'mycard--picked');
-const MATCH = new CardState('MATCHED', 'mycard--match');
-const MISMATCH = new CardState('MATCHED', 'mycard--mismatch');
+const FACEDOWN = new CardState('FACEDOWN', 'card--face-down');
+const PICKED = new CardState('PICKED', 'card--picked');
+const MATCH = new CardState('MATCHED', 'card--match');
+const MISMATCH = new CardState('MATCHED', 'card--mismatch');
 
 const CARD_STATE = Object.freeze({
   FACEDOWN,
