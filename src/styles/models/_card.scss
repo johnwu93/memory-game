@@ -1,4 +1,4 @@
-
+@import "../base";
 .card {
   &__layout {
     height: 8rem;
@@ -18,7 +18,7 @@
   &--face-down {
     @extend .card__layout;
     @extend .card__content;
-    @extend .card--selectable-hover;
+    @extend .selectable-hover;
     background: #2e3d49;
     font-size: 0;
   }
@@ -26,7 +26,7 @@
   &--face-up {
     @extend .card__layout;
     @extend .card__content;
-    @extend .card--unselectable-hover;
+    @extend .unselectable-hover;
     color: white;
     font-size: 2rem;
   }
@@ -45,13 +45,4 @@
     @extend .card--face-up;
     background: #e42f4f;
   }
-
-  &--selectable-hover {
-    cursor: pointer;
-  }
-
-  &--unselectable-hover {
-    cursor: default;
-  }
-
 }

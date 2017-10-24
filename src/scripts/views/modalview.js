@@ -9,7 +9,7 @@ const template = `
       <div class="modal-content">
         <header class="modal-header">
           <h5 class="modal-title"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close selectable-hover" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </header>
@@ -32,11 +32,11 @@ const template = `
           </section>
                     
           <section class="win__play-again text-center">
-            <button type="button" class="btn btn-success win__play-again__button" data-dismiss="modal">Play Again?</button>
+            <button type="button" class="btn btn-success win__play-again__button selectable-hover" data-dismiss="modal">Play Again?</button>
           </section>
         </article>
         <footer class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary selectable-hover" data-dismiss="modal">Close</button>
         </footer>
       </div>
     </section>

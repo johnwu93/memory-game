@@ -3,6 +3,7 @@ import $ from 'jquery';
 import 'bootstrap';
 import initialize from './controllers/initialize';
 import { CARD_STATE, CardState } from './util/cardstate';
+import ModalView from './views/modalview';
 
 const createInput = function createInput(image: string, state: CardState) {
   return {image, state};
@@ -17,6 +18,8 @@ const createFaceDownCardInput = function createFaceDownCardInput(images: Array<s
 
 
 $(() => {
+  const modalView = new ModalView();
+  modalView.show(3, 2, 100);
   initialize(createFaceDownCardInput([
     'fa-diamond',
     'fa-anchor',

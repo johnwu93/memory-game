@@ -6,7 +6,6 @@ import { CARD_STATE, CardState } from '../util/cardstate';
 const END_ANIMATION_EVENTS = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 const MATCH_ANIMATION = 'rubberBand';
 const MISMATCH_ANIMATION = 'shake';
-const FLIP_OUT_ANIMATION = 'flipOutY';
 const FLIP_IN_ANIMATION = 'flipInY';
 
 export default class CardView {
@@ -48,13 +47,9 @@ export default class CardView {
     // todo fix bug when a bug when a card
     // is being flipped,
     // the animation does not appear changin to mismatched
-    const cardView = this;
-    this.addClassAnimation(FLIP_OUT_ANIMATION, () => {
-      $(cardView.cardContent)
-        .removeClass(`${cardView.state.css} ${FLIP_OUT_ANIMATION}`);
-      cardView.state = newState;
-      cardView.renderAnimationTransition(FLIP_IN_ANIMATION);
-    });
+    $(this.cardContent).removeClass(`${this.state.css}`);
+    this.state = newState;
+    this.renderAnimationTransition(FLIP_IN_ANIMATION);
   }
 
   setPicked() {
@@ -81,7 +76,7 @@ export default class CardView {
   }
 
   removeClassAnimation(animationEffect: string) {
-    const states : Array<CardState> = (Object.values(CARD_STATE): any);
+    const states: Array<CardState> = (Object.values(CARD_STATE): any);
     const removeQuery = states
       .filter(iterState => !iterState.isStateEqual(this.state))
       .map(iterState => iterState.css)
