@@ -1,6 +1,10 @@
 // @flow
 import type { Rating, RatingComputer } from './ratingcomputer';
 
+/**
+ * @description Holds information of the number of moves that have passed in the game and the rating
+ * of the users performance. These factors send notifications whenever they are updated or called
+ */
 export default class Statistics {
   moveCounter: number;
   ratingComputer: RatingComputer;

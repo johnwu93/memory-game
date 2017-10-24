@@ -4,6 +4,9 @@ import { CARD_STATE, CardState } from '../util/cardstate';
 import CardView from '../views/cardview';
 import Card from '../models/card';
 
+/**
+ * @description Controller that helps CardModels notify if their state changed.
+ */
 export default class CardController {
   cardView: CardView;
   cardModel: Card;

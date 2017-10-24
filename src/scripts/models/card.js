@@ -2,7 +2,9 @@
 
 import { type CardState } from '../util/cardstate';
 
-
+/**
+ * @description entity that represents the card of a game
+ */
 export default class Card {
   image: string;
   state: CardState;
@@ -32,7 +34,10 @@ export default class Card {
     return `{ image: ${this.image}, state: ${this.state.toString()}}`;
   }
 
-  // stateChangeCallback accepts one parameter, which is the change state
+  /**
+   * @description A way for the card to notify that it's CardState changed
+   * @param stateChangeCallback
+   */
   bindChangeState(stateChangeCallback: (CardState) => void): void {
     this.stateChangeCallback = stateChangeCallback;
   }

@@ -6,6 +6,9 @@ import EventIncrementer from './eventincrementer';
 
 const myTimerID = new WeakMap();
 
+/**
+ * @description Increments a counter using a timer
+ */
 export default class TimeIncrementer extends EventIncrementer {
   terminateTimer() {
     clearInterval(myTimerID.get(this));

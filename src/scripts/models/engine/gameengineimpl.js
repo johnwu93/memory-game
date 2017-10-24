@@ -7,6 +7,10 @@ import GAME_CONTEXT_NAMES from '../gamecontext';
 import { CARD_STATE } from '../../util/cardstate';
 import { GAME_CONTEXT_FACTORY } from '../gamecontextfactory';
 
+/**
+ * @description Private methods that implements transitions based on the states of
+ * {@link GameContext}
+ */
 const flipCardFaceup = function flipCardFaceup(card: Card) {
   const newContext = GAME_CONTEXT_FACTORY.pickedSingleCard(card);
   card.setState(CARD_STATE.PICKED);

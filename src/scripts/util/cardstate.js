@@ -1,5 +1,9 @@
 // @flow
 
+/**
+ * @enum
+ * @description Possible State that a card can be.
+ */
 export class CardState {
   value: string;
   css: string;

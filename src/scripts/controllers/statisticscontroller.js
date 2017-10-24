@@ -6,6 +6,9 @@ import type { Rating } from '../models/ratingcomputer';
 import TimeIncrementer from '../models/timeincrementer';
 import ModalView from '../views/modalview';
 
+/**
+ * Bind events for objects using Statistics and TimerIncrementer
+ */
 export default class StatisticsController {
   view: StatisticsView;
   model: Statistics;

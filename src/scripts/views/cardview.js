@@ -15,6 +15,10 @@ const getStatesCSS = function getStatesCSS(): string {
     .join(' ');
 };
 
+/**
+ * @description - renders the view for cards in the game, particularly the transitions from one
+ * state to another
+ */
 export default class CardView {
   image: string;
   id: number;
@@ -39,10 +43,20 @@ export default class CardView {
           `;
   }
 
+  /**
+   * @description sends a notification whenever a card is clicked
+   */
   bindFaceDownClick(chooseCallback: (number) => void) {
     $(this.cardSelector).on('click', `.${CARD_STATE.FACEDOWN.css}`, () => chooseCallback(this.id));
   }
 
+  /**
+   * @description Rendering for card transitions is done using animate.css. When you add a class
+   * from animate.css, an animation will render for x seconds. Therefore, the animations are first
+   * done adding the new state of the class and the animation corresponding to the state.
+   * After the animation is finished, the animation is removed any other state that is attached to
+   * the class
+   */
   renderAnimationTransition(animationEffect: string, newState: CardState) {
     this.addClassAnimation(animationEffect, newState)
       .one(END_ANIMATION_EVENTS, () => this.removeClassAnimation(animationEffect, newState));

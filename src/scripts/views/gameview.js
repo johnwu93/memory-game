@@ -3,6 +3,9 @@ import $ from 'jquery';
 import CardView from './cardview';
 import StatisticsView from './statisticsview';
 
+/**
+ * @description View of the game. The initial renderer of the game
+ */
 export default class GameView {
   cards: Array<CardView>;
   statistics: StatisticsView;

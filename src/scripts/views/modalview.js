@@ -43,6 +43,10 @@ const template = `
   </aside>
 `;
 
+/**
+ * @description Constructs the view of the modal and renders their properties. These properties are
+ * from TimerIncrement and Statistics from the model
+ */
 export default class ModalView {
   modalSelector: JQuery;
   ratingSelector: JQuery;

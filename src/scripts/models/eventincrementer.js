@@ -2,7 +2,10 @@
 export type Runnable = () => void;
 
 /**
- * @description Increments a counter based on a scheduled event, such as a timer
+ * @description Increments a counter based on a scheduled event. This enable objects that are not
+ * within the model component to control a counter, such as a timer. Clients must implement their
+ * own implementation of planIncrementEvent to use this class
+ * @abstract
  */
 export default class EventIncrementer {
   counter: number;

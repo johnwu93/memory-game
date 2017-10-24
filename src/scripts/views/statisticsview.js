@@ -22,6 +22,10 @@ const TEMPLATE = `
   </div>
     `;
 
+/**
+ * @description Constructs the view of displayed scores. These rendered properties are from
+ * TimerIncrement and Statistics from the model
+ */
 export default class StatisticsView {
   statsSelector: JQuery;
   ratingSelector: JQuery;

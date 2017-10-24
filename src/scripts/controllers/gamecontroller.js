@@ -39,7 +39,10 @@ const createCardModels = function createCardModels(cardsInput: CardsInput): Arra
   });
 };
 
-
+/**
+ * @description Binds events for the view and model component to talk to each other. It also creates
+ * the initial state of the game
+ */
 export default class GameController {
   gameView: GameView;
   gameModel: Game;

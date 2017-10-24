@@ -3,7 +3,13 @@ import Card from './card';
 import Statistics from './statistics';
 import type { GameEngine } from './engine/gameengine';
 
-
+/**
+ * @description The entity that holds all the interactions of the game components.
+ * Outside components would usually interact with this component
+ * @param cards - the deck of cards that contains that are played in the game
+ * @param gameEngine - process the logic of the game
+ * @param statistics - holds statistics such as the number of moves that have passed and rating
+ */
 export default class Game {
   cards: Array<Card>;
   statistics: Statistics;
