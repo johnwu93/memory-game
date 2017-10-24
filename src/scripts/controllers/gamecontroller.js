@@ -14,7 +14,8 @@ import StatisticsView from '../views/statisticsview';
 
 type CardsInput = Array<{ image: string, state: CardState }>;
 
-const shuffle = function shuffleFunction<T>(array: Array<T>): Array<T> {
+// eslint-disable-next-line no-shadow
+const shuffle = function shuffle<T>(array: Array<T>): Array<T> {
   let currentIndex = array.length;
 
   while (currentIndex !== 0) {
@@ -54,7 +55,7 @@ export default class GameController {
     const gameEngine = createGameEngine(cardModels);
     this.gameModel = new Game(cardModels, gameEngine, gameStatistics);
     const cardViews = cardModels.map((card, id) =>
-      new CardView(card.image, card.getState(), id));
+      new CardView(card.image, id));
     this.gameView = new GameView(cardViews, new StatisticsView());
     this.setupCards();
     this.setupStatistics();
@@ -80,6 +81,7 @@ export default class GameController {
   bindCardEvents(cardView: CardView, index: number) {
     cardView.bindFaceDownClick(this.pickFaceDownCard.bind(this));
     const cardController = new CardController(cardView, this.gameModel.cards[index]);
+    cardController.changeCardStateView(this.gameModel.cards[index].state);
     cardController.bindEvents();
   }
 

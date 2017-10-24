@@ -8,48 +8,49 @@ const MATCH_ANIMATION = 'rubberBand';
 const MISMATCH_ANIMATION = 'shake';
 const FLIP_IN_ANIMATION = 'flipInY';
 
+const getStatesCSS = function getStatesCSS(): string {
+  const states: Array<CardState> = (Object.values(CARD_STATE): any);
+  return states
+    .map(iterState => iterState.css)
+    .join(' ');
+};
+
 export default class CardView {
   image: string;
-  state: CardState;
   id: number;
   cardSelector: JQuery;
   cardContent: JQuery;
 
-  constructor(image: string, state: CardState, id: number) {
+  constructor(image: string, id: number) {
     this.image = image;
-    this.state = state;
     this.id = id;
     this.cardSelector = $(this.render());
     // noinspection JSValidateTypes
-    this.cardContent = $(this.cardSelector).children();
+    this.cardContent = $(this.cardSelector).find('.card__display');
   }
 
   render() {
     return `
           <section id="${this.id}" class="col-6 col-md-3 my-3">
-            <div class="card__display animated ${this.state.css} mx-auto">
+            <div class="card__display animated mx-auto">
               <i class="fa ${this.image}"></i>
             </div>
           </section>
           `;
   }
 
-  // callback is a function that accepts an id value as input
   bindFaceDownClick(chooseCallback: (number) => void) {
     $(this.cardSelector).on('click', `.${CARD_STATE.FACEDOWN.css}`, () => chooseCallback(this.id));
   }
 
-  renderAnimationTransition(animationEffect: string) {
-    this.addClassAnimation(animationEffect, this.removeClassAnimation.bind(this));
+  renderAnimationTransition(animationEffect: string, newState: CardState) {
+    this.addClassAnimation(animationEffect, newState)
+      .one(END_ANIMATION_EVENTS, () => this.removeClassAnimation(animationEffect, newState));
   }
 
   animateFlip(newState: CardState) {
-    // todo fix bug when a bug when a card
-    // is being flipped,
-    // the animation does not appear changin to mismatched
-    $(this.cardContent).removeClass(`${this.state.css}`);
-    this.state = newState;
-    this.renderAnimationTransition(FLIP_IN_ANIMATION);
+    $(this.cardContent).removeClass(getStatesCSS()); // remove old states
+    this.renderAnimationTransition(FLIP_IN_ANIMATION, newState);
   }
 
   setPicked() {
@@ -61,27 +62,19 @@ export default class CardView {
   }
 
   setMatch() {
-    this.state = CARD_STATE.MATCH;
-    this.renderAnimationTransition(MATCH_ANIMATION);
+    this.renderAnimationTransition(MATCH_ANIMATION, CARD_STATE.MATCH);
   }
 
   setMismatch() {
-    this.state = CARD_STATE.MISMATCH;
-    this.renderAnimationTransition(MISMATCH_ANIMATION);
+    this.renderAnimationTransition(MISMATCH_ANIMATION, CARD_STATE.MISMATCH);
   }
 
-  addClassAnimation(animationEffect: string, followupAnimationCallback: (string) => void) {
-    $(this.cardContent).addClass(`${animationEffect} ${this.state.css}`)
-      .one(END_ANIMATION_EVENTS, () => followupAnimationCallback(animationEffect));
+  addClassAnimation(animationEffect: string, newState: CardState) {
+    return $(this.cardContent).addClass(`${animationEffect} ${newState.css}`);
   }
 
-  removeClassAnimation(animationEffect: string) {
-    const states: Array<CardState> = (Object.values(CARD_STATE): any);
-    const removeQuery = states
-      .filter(iterState => !iterState.isStateEqual(this.state))
-      .map(iterState => iterState.css)
-      .join(' ');
-
+  removeClassAnimation(animationEffect: string, excludeState: CardState) {
+    const removeQuery = getStatesCSS().replace(excludeState.css, '');
     $(this.cardContent).removeClass(`${removeQuery} ${animationEffect}`);
   }
 }
