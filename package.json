@@ -5,13 +5,16 @@
   "main": "gulpfile.js",
   "scripts": {
     "build": "gulp build",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "heroku-postbuild": "gulp build",
+    "deploy": "node server.js"
   },
   "author": "John Wu",
   "license": "ISC",
   "dependencies": {
     "animate.css": "^3.5.2",
     "bootstrap": "^4.0.0-beta",
+    "express": "^4.16.2",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5",
     "tether": "^1.4.0"
