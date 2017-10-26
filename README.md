@@ -9,6 +9,9 @@ Each turn:
 
 The game ends once all cards have been correctly matched.
 
+The game can be played in on
+https://johnwu93-memory-game.herokuapp.com/ 
+
 
 ## Installation
 This project requires multiple dependencies. In order to get these dependencies, you need to install 
@@ -90,7 +93,13 @@ The logic of the game can be demonstrated through the test cases. under `test/`
 
 Please feel free to comment on the organization of this project. I would love to hear them. 
 
-## Bugs
+## Bugs and Issues [Important!]
 If you click on the icons very fast, then it can cause some data races, which can
 lead to unexpected behavior for the game. It is advised to wait until all the animations
 have been rendered before making a turn. 
+
+These issues will less likely to occur if it is played on a local machine. 
+
+Also, you may have issues running the app on your local machine. There was issue were the css was
+not processed correctly. If the game is not processed correctly, then please check the heroku-hosted
+app, https://johnwu93-memory-game.herokuapp.com/. This is the production version of the app.
