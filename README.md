@@ -20,15 +20,19 @@ dependencies on the terminal:
 npm install
 ```
 
-Afterwards, you will need to install a [SASS](http://sass-lang.com/), a group of stylesheets that is considered to be 
-prettier and more usable that .css files. Specifically, you need to install the transpiler than converts .scss code into
-.css code. Details for install this can be found on this [link](http://sass-lang.com/install).
+Afterwards, you will need to install a some Ruby dependencies for this project, such as [SASS](http://sass-lang.com/) 
+by using the package manager, Bundler. You can find more information about this manager on this link,
+[link](https://github.com/bundler/bundler).
 
-If you have a linux machine, you can install SASS with the following command:
+If you have a MacOsX, you can install `bundler` with the following command:
 
 ```
-sudo gem install sass
+sudo gem install bundler
+bundle install
 ```
+
+If you do not have the binaries, `gem` or `ruby`, you may need to install 
+`ruby` from this [link](https://www.ruby-lang.org/en/documentation/installation/) and `gem` from this [link](https://rubygems.org/gems/rubygems-update-2.6.14.gem) 
 
 ## Usages
 
