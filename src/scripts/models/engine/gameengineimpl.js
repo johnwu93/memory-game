@@ -38,17 +38,6 @@ const computeMatch = function computeMatch(
   return newContext;
 };
 
-const pickFacedownCardAfterMismatched = function pickFacedownCardAfterMismatched(
-  faceDownCard: Card,
-  firstMismatchedCard: Card,
-  secondMismatchedCard: Card,
-) {
-  const newContext = GAME_CONTEXT_FACTORY.pickedSingleCard(faceDownCard);
-  faceDownCard.setState(CARD_STATE.PICKED);
-  firstMismatchedCard.setState(CARD_STATE.FACEDOWN);
-  secondMismatchedCard.setState(CARD_STATE.FACEDOWN);
-  return newContext;
-};
 
 export default class GameEngineImpl implements GameEngine {
   matchedCards: Array<Card>;
@@ -67,9 +56,6 @@ export default class GameEngineImpl implements GameEngine {
       this.gameContext = flipCardFaceup(card);
     } else if (this.gameContext.type === GAME_CONTEXT_NAMES.PICKED_SINGLE_CARD) {
       this.gameContext = computeMatch(card, this.gameContext.card, this.matchedCards);
-    } else if (this.gameContext.type === GAME_CONTEXT_NAMES.MISMATCHED_PAIR) {
-      this.gameContext =
-        pickFacedownCardAfterMismatched(card, this.gameContext.first, this.gameContext.second);
     } else {
       throw new TypeError('Invalid gameContext State');
     }

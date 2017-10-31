@@ -81,10 +81,9 @@ The model is the most important component of the project as it drives the busine
 `model/game` is the main channel that processes all the moves of the game and updates the recorded statistics of the game.
 The logic is delegated by the abstract class `model/gameengine`.
 
-We can see from the game that there are three primary states/context:
+We can see from the game that there are two primary states/context:
 1. Player is selecting the first card of a pair
 2. Player is selecting the second card of a pair after selecting the first
-3. Player has two mismatched cards
 The implementation of this can be found in `model/gamecontext`.
 `model/gameengineimpl` implements the logic for the game and dictates how one state will transition to another state
 using the games rules. 
