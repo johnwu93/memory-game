@@ -70,6 +70,12 @@ export default class GameController {
     this.setupStatistics();
   }
 
+  resetGame() {
+    const timeIncrementer = ((this.gameModel.incrementer: any): TimeIncrementer);
+    timeIncrementer.terminateTimer();
+    this.startRandomGame();
+  }
+
   updateTimer(time: number) {
     this.gameView.statistics.updateTimer(time);
   }
@@ -89,8 +95,8 @@ export default class GameController {
     statisticsController.bindEvents();
     statisticsController.setView();
     this.gameModel.setWinNotification(statisticsController.showWinModal.bind(statisticsController));
-    statisticsController.view.bindRestartClick(this.startRandomGame.bind(this));
-    statisticsController.modalView.bindResetEvent(this.startRandomGame.bind(this));
+    statisticsController.view.bindRestartClick(this.resetGame.bind(this));
+    statisticsController.modalView.bindResetEvent(this.resetGame.bind(this));
   }
 
   bindCardEvents(cardView: CardView, index: number) {
