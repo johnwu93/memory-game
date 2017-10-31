@@ -84,11 +84,13 @@ export default class CardView {
   }
 
   addClassAnimation(animationEffect: string, newState: CardState) {
-    return $(this.cardContent).addClass(`${animationEffect} ${newState.css}`);
+    return $(this.cardContent).stop(true, true)
+      .addClass(`${animationEffect} ${newState.css}`);
   }
 
   removeClassAnimation(animationEffect: string, excludeState: CardState) {
-    const removeQuery = getStatesCSS().replace(excludeState.css, '');
+    const removeQuery = getStatesCSS();
     $(this.cardContent).removeClass(`${removeQuery} ${animationEffect}`);
+    $(this.cardContent).addClass(excludeState.css);
   }
 }
