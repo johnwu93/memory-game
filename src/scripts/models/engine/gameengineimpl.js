@@ -56,6 +56,7 @@ export default class GameEngineImpl implements GameEngine {
       this.gameContext = flipCardFaceup(card);
     } else if (this.gameContext.type === GAME_CONTEXT_NAMES.PICKED_SINGLE_CARD) {
       this.gameContext = computeMatch(card, this.gameContext.card, this.matchedCards);
+      // compute statistics here
     } else {
       throw new TypeError('Invalid gameContext State');
     }

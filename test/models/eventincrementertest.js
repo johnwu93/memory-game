@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 // @flow
 
-import EventIncrementer from '../../src/scripts/models/eventincrementer';
-import type { Runnable } from '../../src/scripts/models/eventincrementer';
+import type { Runnable } from '../../src/scripts/models/incrementer/eventincrementer';
+import EventIncrementer from '../../src/scripts/models/incrementer/eventincrementer';
 import assertNotify from './util';
 
 class TwiceIncrementer extends EventIncrementer {

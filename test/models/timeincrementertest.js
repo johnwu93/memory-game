@@ -1,7 +1,7 @@
 // @flow
 
 
-import TimeIncrementer from '../../src/scripts/models/timeincrementer';
+import TimeIncrementer from '../../src/scripts/models/incrementer/timeincrementer';
 
 describe('Time Incrementer', () => {
   it('should have timer start and end', () => {

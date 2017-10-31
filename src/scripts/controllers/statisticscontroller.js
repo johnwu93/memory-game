@@ -3,7 +3,7 @@
 import StatisticsView from '../views/statisticsview';
 import Statistics from '../models/statistics';
 import type { Rating } from '../models/ratingcomputer';
-import TimeIncrementer from '../models/timeincrementer';
+import TimeIncrementer from '../models/incrementer/timeincrementer';
 import ModalView from '../views/modalview';
 
 /**
