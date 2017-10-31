@@ -5,7 +5,7 @@ Each turn:
 - The player flips one card over to reveal its underlying symbol.
 - The player then turns over a second card, trying to find the corresponding card with the same symbol.
 - If the cards match, both cards stay flipped over.
-- If the cards do not match, they are revealed up until the player flips another card
+- If the cards do not match, they are revealed up as mismatched and will be flipped facedown after 1.5 seconds
 
 The game ends once all cards have been correctly matched.
 
@@ -68,8 +68,8 @@ please notify me through my email, johnwu93@gmail.com
 All the style sheets are written in `.scss` and can be found in `src/styles`. They are organized based
 on the views that uses them.
 
-The MVC pattern guided the structure of the project
-which, in real-life should not be the case according to the book, [Clean Code](https://www.safaribooksonline.com/library/view/clean-architecture-a/9780134494272/)).
+The MVC pattern guided the structure of the project which, in real-life should not be the case 
+according to the book, [Clean Code](https://www.safaribooksonline.com/library/view/clean-architecture-a/9780134494272/)).
 
 The project is divided by views and models. The model drives the logic of the game.
 The views gets input from the user and then sends them to the models. The views will also get notifications from the 
@@ -86,19 +86,18 @@ We can see from the game that there are two primary states/context:
 2. Player is selecting the second card of a pair after selecting the first
 The implementation of this can be found in `model/gamecontext`.
 `model/gameengineimpl` implements the logic for the game and dictates how one state will transition to another state
-using the games rules. 
+using the games rules.
 
 The logic of the game can be demonstrated through the test cases. under `test/`
 
-Please feel free to comment on the organization of this project. I would love to hear them. 
+The rating of player is computed by the following function based on the number of rules:
+`f(num_moves) = I[numMoves <= 0.75 * totalCards] + I[numMoves <= totalCards] + 1`
+
+where `I` is a boolean indicator function that will be 1 if the condition is met, otherwise 0.
+
+Please feel free to comment on the organization of this project. I would love to hear them.
 
 ## Bugs and Issues [Important!]
-If you click on the icons very fast, then it can cause some data races, which can
-lead to unexpected behavior for the game. It is advised to wait until all the animations
-have been rendered before making a turn. 
-
-These issues will less likely to occur if it is played on a local machine. 
-
-Also, you may have issues running the app on your local machine. There was issue were the css was
+You may have issues running the app on your local machine. There was issue were the css was
 not processed correctly. If the game is not processed correctly, then please check the heroku-hosted
 app, https://johnwu93-memory-game.herokuapp.com/. This is the production version of the app.
