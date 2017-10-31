@@ -15,10 +15,6 @@ const GAME_CONTEXT_FACTORY = Object.freeze({
   pickedSingleCard(card: Card): GameContext {
     return {type: 'PICKED_SINGLE_CARD', card};
   },
-
-  mismatchedPair(firstCard: Card, secondCard: Card): GameContext {
-    return {type: 'MISMATCHED_PAIR', first: firstCard, second: secondCard};
-  },
 });
 
 /**
@@ -39,8 +35,6 @@ const createGameContext = function createGameContext(cardsInput: Array<Card>) {
     return GAME_CONTEXT_FACTORY.noneSelected();
   } else if (currentlyPickedCards.length === 1 && mismatchedCards.length === 0) {
     return GAME_CONTEXT_FACTORY.pickedSingleCard(currentlyPickedCards[0]);
-  } else if (mismatchedCards.length === 2) {
-    return GAME_CONTEXT_FACTORY.mismatchedPair(mismatchedCards[0], mismatchedCards[1]);
   }
   throw TypeError('Cannot create a game context with given cards');
 };

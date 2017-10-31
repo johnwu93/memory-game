@@ -34,53 +34,39 @@ describe('game engine', () => {
     expect(pickedCardsDeck.length).toBe(2);
   });
 
-  it('should single card context -> mismatched context if image is not the same', () => {
+  it('should single card context -> have called two mismatched cards if image is not the same (discounting time)', () => {
     const faceDownCard = new Card('foo', CARD_STATE.FACEDOWN);
     const pickedCard = new Card('bar', CARD_STATE.PICKED);
     const initialContext = GAME_CONTEXT_FACTORY.pickedSingleCard(pickedCard);
 
+    spyOn(window, 'setTimeout').and.returnValue();
+
     const gameEngine = new GameEngineImpl([], initialContext, 2);
     gameEngine.pickCard(faceDownCard);
 
-    const expectedMismatchedContext = GAME_CONTEXT_FACTORY.mismatchedPair(
-      new Card('bar', CARD_STATE.MISMATCH),
-      new Card('foo', CARD_STATE.MISMATCH),
-    );
-    expect(gameEngine.gameContext).toEqual(expectedMismatchedContext);
+    const expectedNoneSelectedContext = GAME_CONTEXT_FACTORY.noneSelected();
+    expect(gameEngine.gameContext).toEqual(expectedNoneSelectedContext);
+    expect(pickedCard).toEqual(new Card('bar', CARD_STATE.MISMATCH));
+    expect(faceDownCard).toEqual(new Card('foo', CARD_STATE.MISMATCH));
   });
 
-  it('should none selected context -> single card context -> mismatched context if image is not the same', () => {
-    const firstFaceDownCard = new Card('foo', CARD_STATE.FACEDOWN);
-    const secondFaceDownCard = new Card('bar', CARD_STATE.FACEDOWN);
-    const gameContext = GAME_CONTEXT_FACTORY.noneSelected();
-
-    const gameEngine = new GameEngineImpl([], gameContext, 2);
-    gameEngine.pickCard(secondFaceDownCard);
-    gameEngine.pickCard(firstFaceDownCard);
-
-    const expectedMismatchedContext = GAME_CONTEXT_FACTORY.mismatchedPair(
-      new Card('bar', CARD_STATE.MISMATCH),
-      new Card('foo', CARD_STATE.MISMATCH),
-    );
-    expect(gameEngine.gameContext).toEqual(expectedMismatchedContext);
-  });
-
-  it('should mismatched context -> picked context', () => {
-    const mismatchedCards = ['foo', 'bar'].map(image => new Card(image, CARD_STATE.MISMATCH));
+  it('should single card context -> have called two mismatched cards if image is not the same (including time)', () => {
     const faceDownCard = new Card('foo', CARD_STATE.FACEDOWN);
-    const initialContext = GAME_CONTEXT_FACTORY.mismatchedPair(
-      mismatchedCards[0],
-      mismatchedCards[1],
-    );
+    const pickedCard = new Card('bar', CARD_STATE.PICKED);
+    const initialContext = GAME_CONTEXT_FACTORY.pickedSingleCard(pickedCard);
 
-    const gameEngine = new GameEngineImpl([], initialContext, 3);
+    spyOn(window, 'setTimeout').and.callFake(() => {
+      pickedCard.setState(CARD_STATE.FACEDOWN);
+      faceDownCard.setState(CARD_STATE.FACEDOWN);
+    });
+
+    const gameEngine = new GameEngineImpl([], initialContext, 2);
     gameEngine.pickCard(faceDownCard);
 
-    const expectedGameContext = GAME_CONTEXT_FACTORY.pickedSingleCard(new Card('foo', CARD_STATE.PICKED));
-    expect(gameEngine.gameContext).toEqual(expectedGameContext);
-    mismatchedCards.forEach((card) => {
-      expect(card).toEqual(new Card(card.image, CARD_STATE.FACEDOWN));
-    });
+    const expectedNoneSelectedContext = GAME_CONTEXT_FACTORY.noneSelected();
+    expect(gameEngine.gameContext).toEqual(expectedNoneSelectedContext);
+    expect(pickedCard).toEqual(new Card('bar', CARD_STATE.FACEDOWN));
+    expect(faceDownCard).toEqual(new Card('foo', CARD_STATE.FACEDOWN));
   });
 
   describe('determine if game is completed', () => {

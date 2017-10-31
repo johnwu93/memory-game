@@ -22,16 +22,18 @@ const computeMatch = function computeMatch(
   pickedCard: Card,
   matchedCards: Array<Card>,
 ) {
-  let newContext;
+  const newContext = GAME_CONTEXT_FACTORY.noneSelected();
   if (faceDownCard.isMatchingCard(pickedCard)) {
-    newContext = GAME_CONTEXT_FACTORY.noneSelected();
     matchedCards.push(faceDownCard, pickedCard);
     faceDownCard.setState(CARD_STATE.MATCH);
     pickedCard.setState(CARD_STATE.MATCH);
   } else {
-    newContext = GAME_CONTEXT_FACTORY.mismatchedPair(pickedCard, faceDownCard);
     pickedCard.setState(CARD_STATE.MISMATCH);
     faceDownCard.setState(CARD_STATE.MISMATCH);
+    setTimeout(() => {
+      pickedCard.setState(CARD_STATE.FACEDOWN);
+      faceDownCard.setState(CARD_STATE.FACEDOWN);
+    }, 1500);
   }
   return newContext;
 };
