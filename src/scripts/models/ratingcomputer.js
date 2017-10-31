@@ -13,9 +13,9 @@ export type RatingComputer = (numMoves: number) => Rating;
 const createTotalCardsRatingComputer: (number) => RatingComputer =
   function createTotalCardsRatingComputer(totalCards: number) {
     return function computeRating(numMoves) {
-      if (numMoves <= 1.5 * totalCards) {
+      if (numMoves <= 0.75 * totalCards) {
         return 3;
-      } else if (numMoves <= 2 * totalCards) {
+      } else if (numMoves <= totalCards) {
         return 2;
       }
       return 1;
