@@ -11,6 +11,7 @@ import Statistics from '../models/statistics';
 import createTotalCardsRatingComputer from '../models/ratingcomputer';
 import createGameEngine from '../models/engine/gameenginefactory';
 import StatisticsView from '../views/statisticsview';
+import TimeIncrementer from '../models/incrementer/timeincrementer';
 
 type CardsInput = Array<{ image: string, state: CardState }>;
 
@@ -55,13 +56,22 @@ export default class GameController {
   startRandomGame() {
     const cardModels = shuffle(createCardModels(this.cardsInput));
     const gameStatistics = new Statistics(createTotalCardsRatingComputer(this.cardsInput.length));
-    const gameEngine = createGameEngine(cardModels);
-    this.gameModel = new Game(cardModels, gameEngine, gameStatistics);
+    const timeIncrementer = new TimeIncrementer(this.updateTimer.bind(this));
+    this.gameModel = new Game(
+      cardModels,
+      createGameEngine(cardModels),
+      gameStatistics,
+      timeIncrementer,
+    );
     const cardViews = cardModels.map((card, id) =>
       new CardView(card.image, id));
     this.gameView = new GameView(cardViews, new StatisticsView());
     this.setupCards();
     this.setupStatistics();
+  }
+
+  updateTimer(time: number) {
+    this.gameView.statistics.updateTimer(time);
   }
 
   setupCards() {
@@ -70,9 +80,11 @@ export default class GameController {
   }
 
   setupStatistics() {
+    const timeIncrementer = ((this.gameModel.incrementer: any): TimeIncrementer);
     const statisticsController = new StatisticsController(
       this.gameView.statistics,
       this.gameModel.statistics,
+      timeIncrementer,
     );
     statisticsController.bindEvents();
     statisticsController.setView();

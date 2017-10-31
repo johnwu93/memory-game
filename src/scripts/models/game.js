@@ -1,25 +1,38 @@
 // @flow
 import Card from './card';
+import GameEngineImpl from './engine/gameengineimpl';
+import EventIncrementer from './incrementer/eventincrementer';
 import Statistics from './statistics';
-import type { GameEngine } from './engine/gameengine';
+import GAME_CONTEXT_NAMES from './gamecontext';
 
+
+const myIsGameStarted = new WeakMap();
 /**
  * @description The entity that holds all the interactions of the game components.
- * Outside components would usually interact with this component
+ * Outside components, such as the view, would usually interact with this component
  * @param cards - the deck of cards that contains that are played in the game
  * @param gameEngine - process the logic of the game
- * @param statistics - holds statistics such as the number of moves that have passed and rating
+ * @param statistics - Adjust the statistics of the game
+ * @param incrementer - starts the time incrementer when a move is first played
  */
 export default class Game {
   cards: Array<Card>;
-  statistics: Statistics;
   notifyWin: () => void;
-  gameEngine: GameEngine;
+  gameEngine: GameEngineImpl;
+  statistics: Statistics;
+  incrementer: EventIncrementer;
 
-  constructor(cards: Array<Card>, gameEngine: GameEngine, statistics: Statistics) {
+  constructor(
+    cards: Array<Card>,
+    gameEngine: GameEngineImpl,
+    statistics: Statistics,
+    incrementer: EventIncrementer,
+  ) {
     this.cards = cards;
-    this.statistics = statistics;
     this.gameEngine = gameEngine;
+    this.statistics = statistics;
+    this.incrementer = incrementer;
+    myIsGameStarted.set(this, false);
   }
 
   setWinNotification(notifyWin: () => void) {
@@ -27,13 +40,19 @@ export default class Game {
   }
 
   processInput(index: number) {
-    this.gameEngine.pickCard(this.cards[index]);
-    if (this.gameEngine.isWin()) {
-      if (typeof this.notifyWin !== 'undefined') {
-        this.notifyWin();
-      }
+    if (!myIsGameStarted.get(this)) {
+      this.incrementer.setup();
+      myIsGameStarted.set(this, true);
     }
-    this.statistics.computeRating();
-    this.statistics.incrementMoveCounter();
+    if (this.gameEngine.gameContext.type === GAME_CONTEXT_NAMES.PICKED_SINGLE_CARD) {
+      this.statistics.incrementMoveCounter();
+      this.statistics.computeRating();
+    }
+
+    this.gameEngine.pickCard(this.cards[index]);
+
+    if (this.gameEngine.isWin() && typeof this.notifyWin !== 'undefined') {
+      this.notifyWin();
+    }
   }
 }

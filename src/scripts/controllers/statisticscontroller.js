@@ -15,15 +15,14 @@ export default class StatisticsController {
   timeIncrementer: TimeIncrementer;
   modalView: ModalView;
 
-  constructor(view: StatisticsView, model: Statistics) {
+  constructor(view: StatisticsView, model: Statistics, timeIncrementer: TimeIncrementer) {
     this.view = view;
     this.model = model;
-    this.timeIncrementer = new TimeIncrementer(this.updateTimer.bind(this));
     this.modalView = new ModalView();
+    this.timeIncrementer = timeIncrementer;
   }
 
   setView() {
-    this.timeIncrementer.setup();
     this.view.clear();
     this.view.initializeRendering(
       this.model.moveCounter,
@@ -43,10 +42,6 @@ export default class StatisticsController {
 
   updateRating(rating: Rating) {
     this.view.updateRating(rating);
-  }
-
-  updateTimer(time: number) {
-    this.view.updateTimer(time);
   }
 
   showWinModal() {
