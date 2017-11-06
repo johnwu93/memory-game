@@ -9,7 +9,7 @@ const util = require('./util');
 
 const TRANSPILED_CSS = 'styles.css';
 module.exports = merge(
-  util.removeProject(projectPaths.TEMP_DIRECTORY),
+  util.removeProject(projectPaths.DEV_DIRECTORY),
   styles.generateDevScssModuleRule(TRANSPILED_CSS),
   base.BASE_CONFIG,
   util.includeVendors(
@@ -18,10 +18,10 @@ module.exports = merge(
   ),
   {
     output: {
-      path: projectPaths.TEMP_DIRECTORY,
+      path: projectPaths.DEV_DIRECTORY,
     },
     devServer: {
-      contentBase: projectPaths.TEMP_DIRECTORY,
+      contentBase: projectPaths.DEV_DIRECTORY,
       compress: true,
       port: 3000,
     },
