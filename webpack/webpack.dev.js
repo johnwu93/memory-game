@@ -4,12 +4,18 @@ const projectPaths = require('./webpack.project.paths');
 const merge = require('webpack-merge');
 const base = require('./webpack.base');
 const styles = require('./webpack.styles');
-const vendors = require('./webpack.vendors');
+const util = require('./util');
+
 
 const TRANSPILED_CSS = 'styles.css';
 module.exports = merge(
-  base.BASE_CONFIG,
+  util.removeProject(projectPaths.TEMP_DIRECTORY),
   styles.generateDevScssModuleRule(TRANSPILED_CSS),
+  base.BASE_CONFIG,
+  util.includeVendors(
+    path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/animate.css/animate.css'),
+    path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/bootstrap/dist/css/bootstrap.css'),
+  ),
   {
     output: {
       path: projectPaths.TEMP_DIRECTORY,
@@ -20,9 +26,5 @@ module.exports = merge(
       port: 3000,
     },
     devtool: 'source-map',
-    plugins: vendors.includeVendors(
-      path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/animate.css/animate.css'),
-      path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/bootstrap/dist/css/bootstrap.css'),
-    ),
   },
 );
