@@ -1,5 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // Karma configuration
 // Generated on Thu Oct 12 2017 12:28:06 GMT-0700 (PDT)
+
+const merge = require('webpack-merge');
+const babelConfig = require('./webpack/webpack.babel.js');
 
 module.exports = function configSettings(config) {
   config.set({
@@ -26,24 +30,10 @@ module.exports = function configSettings(config) {
       'test/**/*.js': ['webpack', 'sourcemap'],
     },
 
-    webpack: {
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: ['env'],
-                plugins: ['transform-flow-strip-types'],
-              },
-            },
-          },
-        ],
-      },
-      devtool: 'inline-source-map',
-    },
+    webpack: merge(
+      babelConfig,
+      {devtool: 'inline-source-map'},
+    ),
 
     webpackServer: {
       noInfo: true,
