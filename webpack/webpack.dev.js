@@ -12,7 +12,12 @@ module.exports = merge(
   styles.generateDevScssModuleRule(TRANSPILED_CSS),
   {
     output: {
-      path: path.resolve(projectPaths.ROOT_DIRECTORY, 'temp'),
+      path: projectPaths.TEMP_DIRECTORY,
+    },
+    devServer: {
+      contentBase: projectPaths.TEMP_DIRECTORY,
+      compress: true,
+      port: 3000,
     },
     devtool: 'source-map',
     plugins: vendors.includeVendors(
