@@ -6,9 +6,9 @@
   "scripts": {
     "clean:dev": "rm -rf temp/",
     "clean:prod": "rm -rf prod/",
-    "build:dev": "npm run clean:dev && node_modules/.bin/webpack --config webpack/webpack.dev.js",
-    "build:prod": "npm run clean:prod && node_modules/.bin/webpack --config webpack/webpack.prod.js",
-    "start": "node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js --open",
+    "build:dev": "npm run clean:dev && node_modules/.bin/webpack --config tasks/webpack/webpack.dev.js",
+    "build:prod": "npm run clean:prod && node_modules/.bin/webpack --config tasks/webpack/webpack.prod.js",
+    "start": "node_modules/.bin/webpack-dev-server --config tasks/webpack/webpack.dev.js --open",
     "deploy": "sh tasks/heroku-deploy.sh"
   },
   "author": "John Wu",

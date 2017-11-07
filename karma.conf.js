@@ -3,7 +3,7 @@
 // Generated on Thu Oct 12 2017 12:28:06 GMT-0700 (PDT)
 
 const merge = require('webpack-merge');
-const babelConfig = require('./webpack/webpack.babel.js');
+const babelConfig = require('./tasks/webpack/webpack.babel.js');
 
 module.exports = function configSettings(config) {
   config.set({
