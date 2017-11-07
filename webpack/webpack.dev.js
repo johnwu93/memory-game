@@ -9,7 +9,6 @@ const util = require('./util');
 
 const TRANSPILED_CSS = 'styles.css';
 module.exports = merge(
-  util.removeProject(projectPaths.DEV_DIRECTORY),
   styles.generateDevScssModuleRule(TRANSPILED_CSS),
   base.BASE_CONFIG,
   util.includeVendors(

@@ -14,7 +14,6 @@ const TRANSPILED_CSS = 'styles.css';
 
 // noinspection JSUnresolvedFunction
 module.exports = merge(
-  util.removeProject(projectPaths.PROD_DIRECTORY),
   styles.generateProdScssModuleRule(TRANSPILED_CSS),
   base.BASE_CONFIG,
   util.includeVendors(

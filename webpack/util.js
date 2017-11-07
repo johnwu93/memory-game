@@ -3,7 +3,6 @@ const path = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const VENDORS_DIR = 'vendors/';
 
@@ -25,14 +24,6 @@ module.exports.includeVendors = function includeVendors(...vendorsFilePath) {
         assets: vendorFileNames,
         append: false,
       }),
-    ],
-  };
-};
-
-module.exports.removeProject = function removeProject(directory) {
-  return {
-    plugins: [
-      new CleanWebpackPlugin(['*'], {root: directory}),
     ],
   };
 };

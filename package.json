@@ -4,10 +4,12 @@
   "description": "Configuration settings for writing Front End Development Code for Udacity Projects",
   "main": "gulpfile.js",
   "scripts": {
-    "build": "gulp build",
-    "watch": "gulp watch",
-    "heroku-postbuild": "gulp build",
-    "deploy": "node server.js"
+    "clean:dev": "rm -rf temp/",
+    "clean:prod": "rm -rf prod/",
+    "build:dev": "npm run clean:dev && node_modules/.bin/webpack --config webpack/webpack.dev.js",
+    "build:prod": "npm run clean:prod && node_modules/.bin/webpack --config webpack/webpack.prod.js",
+    "start": "node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js --open",
+    "deploy": "sh tasks/heroku-deploy.sh"
   },
   "author": "John Wu",
   "license": "ISC",
@@ -30,7 +32,6 @@
     "babel-preset-flow": "^6.23.0",
     "bootstrap-sass": "^3.3.7",
     "browser-sync": "^2.18.13",
-    "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.7",
     "eslint": "^4.9.0",
