@@ -23,7 +23,7 @@ dependencies on the terminal:
 npm install
 ```
 
-Afterwards, you will need to install a some Ruby dependencies for this project, such as [SASS](http://sass-lang.com/) 
+Afterwards, you will need to install some Ruby dependencies for this project, such as [SASS](http://sass-lang.com/) 
 by using the package manager, Bundler. You can find more information about this manager on this link,
 [link](https://github.com/bundler/bundler).
 
@@ -39,18 +39,18 @@ If you do not have the binaries, `gem` or `ruby`, you may need to install
 
 ## Usages
 
-With these installed modules, you will need to all the bundled all the javascript files into one file with the 
+With these installed modules, you will need to all the bundled all the javascript and css files into one file with the 
 following command on the terminal:
 
 ```
-npm run-script build
+npm run-script build:dev
 ```
 
-The project can be viewed by first running it on a local server with the 
+The project can be viewed by running it on a local server with the 
 following command;
 
 ```
-npm run-script watch
+npm run-script start
 ```
 
 The website should pop up automatically. If it doesn't, look at the terminal window that called the previous task.
@@ -88,7 +88,7 @@ The implementation of this can be found in `model/gamecontext`.
 `model/gameengineimpl` implements the logic for the game and dictates how one state will transition to another state
 using the games rules.
 
-The logic of the game can be demonstrated through the test cases. under `test/`
+The logic of the game can be demonstrated through the test cases, under `test/`
 
 The rating of player is computed by the following function based on the number of rules:
 `f(num_moves) = I[numMoves <= 0.75 * totalCards] + I[numMoves <= totalCards] + 1`
